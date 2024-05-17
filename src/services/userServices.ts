@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { hash } from "bcrypt";
 import { UserDataCreate } from "../repositories/userRepository";
+import { appError } from "../utils/appError";
 
 type UserData = {
   name: string;
@@ -9,7 +10,8 @@ type UserData = {
 };
 
 type Repository = {
-  createUser(data: UserDataCreate): Promise<{ id: string } | undefined>;
+  createUser(data: UserDataCreate): Promise<{} | undefined>;
+  getUserByID(id: string): Promise<{}>;
 };
 
 export const userServices = {
@@ -29,6 +31,18 @@ export const userServices = {
       const userCreated = await repository.createUser(user);
 
       return userCreated;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async read(id: string, repository: Repository) {
+    try {
+      const userData = await repository.getUserByID(id);
+
+      if (!userData) throw appError("user not found!", 404);
+
+      return userData;
     } catch (error) {
       throw error;
     }

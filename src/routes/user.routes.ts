@@ -5,4 +5,4 @@ import { authMiddleware } from "../middlewares/authMiddleware";
 export const userRoutes = Router();
 
 userRoutes.post("/user", userControllers.create);
-userRoutes.get("/user", authMiddleware, userControllers.read);
+userRoutes.get("/user/:id", userControllers.read);

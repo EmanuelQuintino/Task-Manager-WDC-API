@@ -8,11 +8,10 @@ export const userControllers = {
     try {
       const userSchema = z
         .object({
-          name: z
-            .string({
-              required_error: "name is required!",
-              invalid_type_error: "name must be a string!",
-            })
+          name: string({
+            required_error: "name is required!",
+            invalid_type_error: "name must be a string!",
+          })
             .min(3, "name must have at least 3 characters!")
             .max(255, "max name length exceeded!"),
 
@@ -50,7 +49,20 @@ export const userControllers = {
   },
   async read(req: Request, res: Response, next: NextFunction) {
     try {
-      return res.status(200).json({ message: "User read!" });
+      const UUIDSchema = z.object({
+        id: z
+          .string({
+            required_error: "ID is required!",
+            invalid_type_error: "ID must be a string!",
+          })
+          .uuid({ message: "Invalid ID!" }),
+      });
+
+      const { id } = UUIDSchema.parse(req.params);
+
+      const userData = await userServices.read(id, userRepository);
+
+      return res.status(200).json(userData);
     } catch (error) {
       return next(error);
     }

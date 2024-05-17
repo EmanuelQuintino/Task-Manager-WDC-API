@@ -22,4 +22,21 @@ export const userRepository = {
       throw error;
     }
   },
+
+  async getUserByID(id: string) {
+    try {
+      const db = await sqliteConnection();
+
+      const userQuerySQL = "SELECT * FROM users WHERE id == ?";
+      const userData = await db.get(userQuerySQL, [id]);
+
+      const tasksQuerySQL = "SELECT * FROM tasks WHERE id_user == ?";
+      userData.tasks = await db.all(tasksQuerySQL, [id]);
+
+      delete userData.password;
+      return userData;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
