@@ -11,7 +11,7 @@ export function appErrors(
 
   if (error instanceof ZodError) {
     return res
-      .status(error.status || 500)
+      .status(error.status || 400)
       .json({ message: JSON.parse(error.message)[0].message || "Server Error!" });
   }
 

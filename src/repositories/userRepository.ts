@@ -30,7 +30,7 @@ export const userRepository = {
       const userQuerySQL = "SELECT * FROM users WHERE id == ?";
       const userData = await db.get(userQuerySQL, [id]);
 
-      const tasksQuerySQL = "SELECT * FROM tasks WHERE id_user == ?";
+      const tasksQuerySQL = "SELECT * FROM tasks WHERE user_id == ?";
       userData.tasks = await db.all(tasksQuerySQL, [id]);
 
       delete userData.password;

@@ -1,40 +1,12 @@
 import { Request, NextFunction, Response } from "express";
-import { string, z } from "zod";
 import { userServices } from "../services/userServices";
 import { userRepository } from "../repositories/userRepository";
+import { userUUIDSchema } from "../validations/userUUIDSchema";
+import { userSchema } from "../validations/userSchema";
 
 export const userControllers = {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const userSchema = z
-        .object({
-          name: string({
-            required_error: "name is required!",
-            invalid_type_error: "name must be a string!",
-          })
-            .min(3, "name must have at least 3 characters!")
-            .max(255, "max name length exceeded!"),
-
-          email: string({
-            required_error: "email is required!",
-            invalid_type_error: "email must be a string!",
-          })
-            .email("email poorly formatted!")
-            .max(255, "max email length exceeded!"),
-
-          password: string({
-            required_error: "password is required!",
-            invalid_type_error: "password must be a string!",
-          })
-            .min(7, "password must have at least 7 characters!")
-            .max(255, "max password length exceeded!")
-            .regex(/^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{7,}$/, {
-              message:
-                "the password must contain at least one capital letter, one number and one special character!",
-            }),
-        })
-        .strict();
-
       const { name, email, password } = userSchema.parse(req.body);
 
       const userCreated = await userServices.create(
@@ -42,23 +14,15 @@ export const userControllers = {
         userRepository
       );
 
-      return res.status(201).json({ message: "User created!", userCreated });
+      return res.status(201).json({ message: "user created!", userCreated });
     } catch (error) {
       return next(error);
     }
   },
+
   async read(req: Request, res: Response, next: NextFunction) {
     try {
-      const UUIDSchema = z.object({
-        id: z
-          .string({
-            required_error: "ID is required!",
-            invalid_type_error: "ID must be a string!",
-          })
-          .uuid({ message: "Invalid ID!" }),
-      });
-
-      const { id } = UUIDSchema.parse(req.params);
+      const { id } = userUUIDSchema.parse(req.params);
 
       const userData = await userServices.read(id, userRepository);
 

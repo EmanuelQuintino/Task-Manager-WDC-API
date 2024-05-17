@@ -1,13 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { hash } from "bcrypt";
 import { UserDataCreate } from "../repositories/userRepository";
-import { appError } from "../utils/appError";
-
-type UserData = {
-  name: string;
-  email: string;
-  password: string;
-};
+import { appError } from "../errors/appError";
+import { UserDataTypes } from "../validations/userSchema";
 
 type Repository = {
   createUser(data: UserDataCreate): Promise<{} | undefined>;
@@ -15,7 +10,7 @@ type Repository = {
 };
 
 export const userServices = {
-  async create(data: UserData, repository: Repository) {
+  async create(data: UserDataTypes, repository: Repository) {
     try {
       const { name, email, password } = data;
 
