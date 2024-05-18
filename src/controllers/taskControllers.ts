@@ -3,7 +3,7 @@ import { string, z } from "zod";
 import { taskServices } from "../services/taskServices";
 import { taskRepository } from "../repositories/taskRepository";
 import { taskSchema } from "../validations/taskSchema";
-import { taskUUIDSchema } from "../validations/taskUUIDSchema";
+import { UUIDSchema } from "../validations/UUIDSchema";
 
 export const taskControllers = {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -23,7 +23,7 @@ export const taskControllers = {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = taskUUIDSchema.parse(req.params);
+      const { id } = UUIDSchema("task").parse(req.params);
       const { title, description, date, user_id } = taskSchema.parse(req.body);
 
       const taskUpdated = await taskServices.update(
@@ -40,7 +40,7 @@ export const taskControllers = {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = taskUUIDSchema.parse(req.params);
+      const { id } = UUIDSchema("task").parse(req.params);
 
       const taskDeleted = await taskServices.delete(id, taskRepository);
 

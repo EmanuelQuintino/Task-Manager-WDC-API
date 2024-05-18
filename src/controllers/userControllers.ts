@@ -1,8 +1,8 @@
 import { Request, NextFunction, Response } from "express";
 import { userServices } from "../services/userServices";
 import { userRepository } from "../repositories/userRepository";
-import { userUUIDSchema } from "../validations/userUUIDSchema";
 import { userSchema } from "../validations/userSchema";
+import { UUIDSchema } from "../validations/UUIDSchema";
 
 export const userControllers = {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -22,7 +22,7 @@ export const userControllers = {
 
   async read(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = userUUIDSchema.parse(req.params);
+      const { id } = UUIDSchema("user").parse(req.params);
 
       const userData = await userServices.read(id, userRepository);
 
