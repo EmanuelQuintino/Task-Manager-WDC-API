@@ -41,6 +41,11 @@ export const taskServices = {
         description,
         date,
         user_id,
+        updated_at: new Date()
+          .toISOString()
+          .replace("T", " ")
+          .replace("Z", "")
+          .split(".")[0],
       };
 
       const taskCreated = await repository.updateTask(task);

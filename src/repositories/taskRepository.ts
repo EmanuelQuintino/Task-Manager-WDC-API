@@ -2,10 +2,11 @@ import { sqliteConnection } from "../databases/sqlite3";
 import { appError } from "../errors/appError";
 import { CreateTaskDataTypes } from "../services/taskServices";
 
-type TaskData = CreateTaskDataTypes & { id: string };
+type TaskDataCreate = CreateTaskDataTypes & { id: string };
+type TaskDataUpdate = TaskDataCreate & { updated_at: Date };
 
 export const taskRepository = {
-  async createTask({ id, title, description, date, user_id }: TaskData) {
+  async createTask({ id, title, description, date, user_id }: TaskDataCreate) {
     try {
       const db = await sqliteConnection();
 
@@ -20,17 +21,24 @@ export const taskRepository = {
     }
   },
 
-  async updateTask({ id, title, description, date, user_id }: TaskData) {
+  async updateTask({
+    id,
+    title,
+    description,
+    date,
+    user_id,
+    updated_at,
+  }: TaskDataUpdate) {
     try {
       const db = await sqliteConnection();
 
       const querySQL = `
         UPDATE tasks 
-        SET title = ?, description = ?, date = ?, user_id = ?
+        SET title = ?, description = ?, date = ?, user_id = ?, updated_at = ?
         WHERE id = ?;
       `;
 
-      await db.run(querySQL, [title, description, date, user_id, id]);
+      await db.run(querySQL, [title, description, date, user_id, updated_at, id]);
 
       return { id };
     } catch (error) {
