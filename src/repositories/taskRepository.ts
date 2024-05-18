@@ -1,11 +1,11 @@
 import { sqliteConnection } from "../databases/sqlite3";
 import { appError } from "../errors/appError";
-import { TaskDataTypes } from "../validations/taskSchema";
+import { CreateTaskDataTypes } from "../services/taskServices";
 
-export type TaskDataCreate = TaskDataTypes & { id: string };
+type TaskData = CreateTaskDataTypes & { id: string };
 
 export const taskRepository = {
-  async createTask({ id, title, description, date, user_id }: TaskDataCreate) {
+  async createTask({ id, title, description, date, user_id }: TaskData) {
     try {
       const db = await sqliteConnection();
 
@@ -20,7 +20,7 @@ export const taskRepository = {
     }
   },
 
-  async updateTask({ id, title, description, date, user_id }: TaskDataCreate) {
+  async updateTask({ id, title, description, date, user_id }: TaskData) {
     try {
       const db = await sqliteConnection();
 
@@ -33,19 +33,6 @@ export const taskRepository = {
       await db.run(querySQL, [title, description, date, user_id, id]);
 
       return { id };
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  async getTaskByID(id: string) {
-    try {
-      const db = await sqliteConnection();
-
-      const querySQL = "SELECT * FROM tasks WHERE id == ?";
-      const task = await db.get(querySQL, [id]);
-
-      return task;
     } catch (error) {
       throw error;
     }

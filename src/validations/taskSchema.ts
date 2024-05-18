@@ -24,13 +24,6 @@ export const taskSchema = z
         invalid_type_error: "date must be a string!",
       })
       .datetime("date poorly formatted, must be UTC!"),
-
-    user_id: z
-      .string({
-        required_error: "user ID is required!",
-        invalid_type_error: "user ID must be a string!",
-      })
-      .uuid({ message: "invalid user ID!" }),
   })
   .strict();
 

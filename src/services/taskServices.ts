@@ -1,17 +1,17 @@
 import { randomUUID } from "node:crypto";
-import { TaskDataCreate } from "../repositories/taskRepository";
 import { appError } from "../errors/appError";
 import { TaskDataTypes } from "../validations/taskSchema";
 
+export type CreateTaskDataTypes = TaskDataTypes & { user_id: string };
+
 type Repository = {
-  createTask(data: TaskDataCreate): Promise<{} | undefined>;
-  updateTask(data: TaskDataCreate): Promise<{} | undefined>;
-  getTaskByID(id: string): Promise<{}>;
-  deleteTaskByID(id: string): Promise<{}>;
+  createTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
+  updateTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
+  deleteTaskByID(id: string): Promise<{} | undefined>;
 };
 
 export const taskServices = {
-  async create(data: TaskDataTypes, repository: Repository) {
+  async create(data: CreateTaskDataTypes, repository: Repository) {
     try {
       const { title, description, date, user_id } = data;
 
@@ -31,7 +31,7 @@ export const taskServices = {
     }
   },
 
-  async update(id: string, data: TaskDataTypes, repository: Repository) {
+  async update(id: string, data: CreateTaskDataTypes, repository: Repository) {
     try {
       const { title, description, date, user_id } = data;
 

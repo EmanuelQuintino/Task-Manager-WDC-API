@@ -31,10 +31,30 @@ export const userRepository = {
       const userData = await db.get(userQuerySQL, [id]);
 
       const tasksQuerySQL = "SELECT * FROM tasks WHERE user_id == ?";
-      userData.tasks = await db.all(tasksQuerySQL, [id]);
+      const tasks = await db.all(tasksQuerySQL, [id]);
+
+      const tasksWithoutUserID = tasks.map((task) => {
+        delete task.user_id;
+        return task;
+      });
 
       delete userData.password;
+
+      userData.tasks = tasksWithoutUserID;
       return userData;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async getUserByEmail(email: string) {
+    try {
+      const db = await sqliteConnection();
+
+      const querySQL = "SELECT * FROM users WHERE email == ?";
+      const user = await db.get(querySQL, [email]);
+
+      return user;
     } catch (error) {
       throw error;
     }

@@ -1,5 +1,4 @@
 import { Request, NextFunction, Response } from "express";
-import { string, z } from "zod";
 import { taskServices } from "../services/taskServices";
 import { taskRepository } from "../repositories/taskRepository";
 import { taskSchema } from "../validations/taskSchema";
@@ -8,10 +7,11 @@ import { UUIDSchema } from "../validations/UUIDSchema";
 export const taskControllers = {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const { title, description, date, user_id } = taskSchema.parse(req.body);
+      const { title, description, date } = taskSchema.parse(req.body);
+      const { id } = UUIDSchema("user").parse({ id: req.userID });
 
       const taskCreated = await taskServices.create(
-        { title, description, date, user_id },
+        { title, description, date, user_id: id },
         taskRepository
       );
 
@@ -24,11 +24,12 @@ export const taskControllers = {
   async update(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = UUIDSchema("task").parse(req.params);
-      const { title, description, date, user_id } = taskSchema.parse(req.body);
+      const userID = UUIDSchema("user").parse({ id: req.userID });
+      const { title, description, date } = taskSchema.parse(req.body);
 
       const taskUpdated = await taskServices.update(
         id,
-        { title, description, date, user_id },
+        { title, description, date, user_id: userID.id },
         taskRepository
       );
 
