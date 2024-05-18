@@ -1,4 +1,5 @@
 node_modules
+database.db
 dist
 .env
 .git
