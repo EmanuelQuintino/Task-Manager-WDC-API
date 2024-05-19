@@ -37,7 +37,7 @@ export const taskServices = {
     try {
       const userTasks = await repository.getUserTasks(userID, limit, offset);
 
-      return userTasks;
+      return { userTasks };
     } catch (error) {
       throw error;
     }
@@ -51,7 +51,7 @@ export const taskServices = {
       if (!task) throw appError("task not found!", 404);
 
       if (task.user_id != user_id) {
-        throw appError("user not authorized to delete task!", 401);
+        throw appError("user not authorized to update task!", 401);
       }
 
       const taskToUpdate = {
