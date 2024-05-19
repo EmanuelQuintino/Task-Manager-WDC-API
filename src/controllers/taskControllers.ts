@@ -56,8 +56,9 @@ export const taskControllers = {
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = UUIDSchema("task").parse(req.params);
+      const userID = UUIDSchema("user").parse({ id: req.userID });
 
-      const taskDeleted = await taskServices.delete(id, taskRepository);
+      const taskDeleted = await taskServices.delete(id, userID.id, taskRepository);
 
       return res.status(200).json({ message: "task was deleted!", taskDeleted });
     } catch (error) {

@@ -8,7 +8,7 @@ type Repository = {
   createTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
   getUserTasks(userID: string, limit: string, offset: string): Promise<{} | undefined>;
   updateTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
-  deleteTaskByID(id: string): Promise<{} | undefined>;
+  deleteTaskByID(id: string, user_id: string): Promise<{} | undefined>;
 };
 
 export const taskServices = {
@@ -67,9 +67,9 @@ export const taskServices = {
     }
   },
 
-  async delete(id: string, repository: Repository) {
+  async delete(id: string, user_id: string, repository: Repository) {
     try {
-      const deleteTaskResult = await repository.deleteTaskByID(id);
+      const deleteTaskResult = await repository.deleteTaskByID(id, user_id);
 
       if (!deleteTaskResult) throw appError("task not deleted!", 400);
 

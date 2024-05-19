@@ -50,13 +50,22 @@ export const taskRepository = {
     try {
       const db = await sqliteConnection();
 
+      const getTaskQuarySQL = "SELECT * FROM tasks WHERE id = ?;";
+      const task = await db.get(getTaskQuarySQL, [id]);
+
+      if (!task) throw appError("task not found!", 404);
+
+      if (task.user_id != user_id) {
+        throw appError("user not authorized to update task!", 401);
+      }
+
       const querySQL = `
         UPDATE tasks 
-        SET title = ?, description = ?, date = ?, user_id = ?, updated_at = ?
+        SET title = ?, description = ?, date = ?, updated_at = ?
         WHERE id = ?;
       `;
 
-      await db.run(querySQL, [title, description, date, user_id, updated_at, id]);
+      await db.run(querySQL, [title, description, date, updated_at, id]);
 
       return { id };
     } catch (error) {
@@ -64,14 +73,21 @@ export const taskRepository = {
     }
   },
 
-  async deleteTaskByID(id: string) {
+  async deleteTaskByID(id: string, user_id: string) {
     try {
       const db = await sqliteConnection();
 
+      const getTaskQuarySQL = "SELECT * FROM tasks WHERE id = ?;";
+      const task = await db.get(getTaskQuarySQL, [id]);
+
+      if (!task) throw appError("task not found!", 404);
+
+      if (task.user_id != user_id) {
+        throw appError("user not authorized to delete task!", 401);
+      }
+
       const tasksQuerySQL = "DELETE FROM tasks WHERE id == ?";
       const deleteTaskResult = await db.run(tasksQuerySQL, [id]);
-
-      if (deleteTaskResult.changes == 0) throw appError("task not found!", 404);
 
       return deleteTaskResult;
     } catch (error) {
