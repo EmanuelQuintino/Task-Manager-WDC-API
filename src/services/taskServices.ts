@@ -6,6 +6,7 @@ export type CreateTaskDataTypes = TaskDataTypes & { user_id: string };
 
 type Repository = {
   createTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
+  getTask(id: string): Promise<{ user_id: string } | undefined>;
   getUserTasks(userID: string, limit: string, offset: string): Promise<{} | undefined>;
   updateTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
   deleteTaskByID(id: string, user_id: string): Promise<{} | undefined>;
@@ -46,7 +47,14 @@ export const taskServices = {
     try {
       const { title, description, date, user_id } = data;
 
-      const task = {
+      const task = await repository.getTask(id);
+      if (!task) throw appError("task not found!", 404);
+
+      if (task.user_id != user_id) {
+        throw appError("user not authorized to delete task!", 401);
+      }
+
+      const taskToUpdate = {
         id,
         title,
         description,
@@ -59,7 +67,7 @@ export const taskServices = {
           .split(".")[0],
       };
 
-      const taskCreated = await repository.updateTask(task);
+      const taskCreated = await repository.updateTask(taskToUpdate);
 
       return taskCreated;
     } catch (error) {
@@ -69,6 +77,13 @@ export const taskServices = {
 
   async delete(id: string, user_id: string, repository: Repository) {
     try {
+      const task = await repository.getTask(id);
+      if (!task) throw appError("task not found!", 404);
+
+      if (task.user_id != user_id) {
+        throw appError("user not authorized to delete task!", 401);
+      }
+
       const deleteTaskResult = await repository.deleteTaskByID(id, user_id);
 
       if (!deleteTaskResult) throw appError("task not deleted!", 400);
