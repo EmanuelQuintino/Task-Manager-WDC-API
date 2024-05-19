@@ -6,6 +6,7 @@ export type CreateTaskDataTypes = TaskDataTypes & { user_id: string };
 
 type Repository = {
   createTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
+  getUserTasks(userID: string, limit: string, offset: string): Promise<{} | undefined>;
   updateTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
   deleteTaskByID(id: string): Promise<{} | undefined>;
 };
@@ -26,6 +27,16 @@ export const taskServices = {
       const taskCreated = await repository.createTask(task);
 
       return taskCreated;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async read(userID: string, limit: string, offset: string, repository: Repository) {
+    try {
+      const userTasks = await repository.getUserTasks(userID, limit, offset);
+
+      return userTasks;
     } catch (error) {
       throw error;
     }

@@ -21,6 +21,24 @@ export const taskRepository = {
     }
   },
 
+  async getUserTasks(userID: string, limit: string, offset: string) {
+    try {
+      const db = await sqliteConnection();
+
+      const tasksQuerySQL = `
+        SELECT * FROM tasks 
+        WHERE user_id == ? 
+        LIMIT ? OFFSET ?;
+      `;
+
+      const tasks = await db.all(tasksQuerySQL, [userID, limit, offset]);
+
+      return tasks;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   async updateTask({
     id,
     title,

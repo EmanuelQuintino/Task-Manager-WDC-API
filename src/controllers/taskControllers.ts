@@ -3,6 +3,7 @@ import { taskServices } from "../services/taskServices";
 import { taskRepository } from "../repositories/taskRepository";
 import { taskSchema } from "../validations/taskSchema";
 import { UUIDSchema } from "../validations/UUIDSchema";
+import { paginationSchema } from "../validations/paginationSchema";
 
 export const taskControllers = {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -16,6 +17,19 @@ export const taskControllers = {
       );
 
       return res.status(201).json({ message: "task created!", taskCreated });
+    } catch (error) {
+      return next(error);
+    }
+  },
+
+  async read(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { limit, offset } = paginationSchema.parse(req.query);
+      const { id } = UUIDSchema("user").parse({ id: req.userID });
+
+      const userTasks = await taskServices.read(id, limit, offset, taskRepository);
+
+      return res.status(200).json(userTasks);
     } catch (error) {
       return next(error);
     }
