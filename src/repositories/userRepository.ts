@@ -27,10 +27,8 @@ export const userRepository = {
     try {
       const db = await sqliteConnection();
 
-      const userQuerySQL = "SELECT * FROM users WHERE id == ?";
-      const userData = await db.get(userQuerySQL, [id]);
-
-      delete userData.password;
+      const querySQL = "SELECT * FROM users WHERE id == ?";
+      const userData = await db.get(querySQL, [id]);
 
       return userData;
     } catch (error) {

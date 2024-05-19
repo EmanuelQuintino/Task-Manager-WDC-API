@@ -6,7 +6,7 @@ import { UserDataTypes } from "../validations/userSchema";
 
 type Repository = {
   createUser(data: UserDataCreate): Promise<{} | undefined>;
-  getUserByID(id: string): Promise<{}>;
+  getUserByID(id: string): Promise<{ password?: string } | undefined>;
 };
 
 export const userServices = {
@@ -36,6 +36,8 @@ export const userServices = {
       const userData = await repository.getUserByID(id);
 
       if (!userData) throw appError("user not found!", 404);
+
+      delete userData.password;
 
       return userData;
     } catch (error) {
