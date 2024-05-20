@@ -1,21 +1,28 @@
 import { randomUUID } from "node:crypto";
 import { appError } from "../errors/appError";
 import { TaskDataTypes } from "../validations/taskSchema";
+import { PaginationDataTypes } from "../validations/paginationSchema";
 
 export type CreateTaskDataTypes = TaskDataTypes & { user_id: string };
+export type UserTasksPagination = PaginationDataTypes & { userID: string };
 
 type Repository = {
   createTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
   getTask(id: string): Promise<{ user_id: string } | undefined>;
   updateTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
   deleteTaskByID(id: string, user_id: string): Promise<{} | undefined>;
-  getUserTasks(userID: string, limit: string, offset: string): Promise<{} | undefined>;
+  getUserTasks({
+    userID,
+    limit,
+    offset,
+    status,
+  }: UserTasksPagination): Promise<{} | undefined>;
 };
 
 export const taskServices = {
   async create(data: CreateTaskDataTypes, repository: Repository) {
     try {
-      const { title, description, date, user_id } = data;
+      const { title, description, date, status, user_id } = data;
 
       if (new Date(date) < new Date()) {
         throw appError("date cannot be before the current time!", 400);
@@ -26,6 +33,7 @@ export const taskServices = {
         title,
         description,
         date,
+        status,
         user_id,
       };
 
@@ -37,9 +45,15 @@ export const taskServices = {
     }
   },
 
-  async read(userID: string, limit: string, offset: string, repository: Repository) {
+  async read(data: UserTasksPagination, repository: Repository) {
     try {
-      const userTasks = await repository.getUserTasks(userID, limit, offset);
+      const { userID, limit, offset, status } = data;
+
+      if (!limit || !offset || !status) {
+        throw appError("please inform query params limit, offset and status!", 400);
+      }
+
+      const userTasks = await repository.getUserTasks({ userID, limit, offset, status });
 
       return { userTasks };
     } catch (error) {
@@ -49,7 +63,7 @@ export const taskServices = {
 
   async update(id: string, data: CreateTaskDataTypes, repository: Repository) {
     try {
-      const { title, description, date, user_id } = data;
+      const { title, description, date, status, user_id } = data;
 
       if (new Date(date) < new Date()) {
         throw appError("date cannot be before the current time!", 400);
@@ -67,6 +81,7 @@ export const taskServices = {
         title,
         description,
         date,
+        status,
         user_id,
         updated_at: new Date()
           .toISOString()

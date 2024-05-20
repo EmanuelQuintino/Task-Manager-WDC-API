@@ -24,6 +24,11 @@ export const taskSchema = z
         invalid_type_error: "date must be a string!",
       })
       .datetime("date poorly formatted, must be UTC!"),
+
+    status: z.enum(["completed", "pending"], {
+      invalid_type_error: "status must be a string!",
+      required_error: "status is required and must be 'completed' or 'pending'",
+    }),
   })
   .strict();
 

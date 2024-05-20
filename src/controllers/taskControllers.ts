@@ -8,11 +8,11 @@ import { paginationSchema } from "../validations/paginationSchema";
 export const taskControllers = {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const { title, description, date } = taskSchema.parse(req.body);
+      const { title, description, date, status } = taskSchema.parse(req.body);
       const { id } = UUIDSchema("user").parse({ id: req.userID });
 
       const taskCreated = await taskServices.create(
-        { title, description, date, user_id: id },
+        { title, description, date, status, user_id: id },
         taskRepository
       );
 
@@ -24,10 +24,18 @@ export const taskControllers = {
 
   async read(req: Request, res: Response, next: NextFunction) {
     try {
-      const { limit, offset } = paginationSchema.parse(req.query);
+      const { limit, offset, status } = paginationSchema.parse(req.query);
       const { id } = UUIDSchema("user").parse({ id: req.userID });
 
-      const userTasks = await taskServices.read(id, limit, offset, taskRepository);
+      const userTasks = await taskServices.read(
+        {
+          userID: id,
+          limit,
+          offset,
+          status,
+        },
+        taskRepository
+      );
 
       return res.status(200).json(userTasks);
     } catch (error) {
@@ -39,15 +47,17 @@ export const taskControllers = {
     try {
       const { id } = UUIDSchema("task").parse(req.params);
       const userID = UUIDSchema("user").parse({ id: req.userID });
-      const { title, description, date } = taskSchema.parse(req.body);
+      const { title, description, date, status } = taskSchema.parse(req.body);
 
-      const taskUpdated = await taskServices.update(
-        id,
-        { title, description, date, user_id: userID.id },
-        taskRepository
-      );
+      if (status) {
+        const taskUpdated = await taskServices.update(
+          id,
+          { title, description, date, status, user_id: userID.id },
+          taskRepository
+        );
 
-      return res.status(201).json({ message: "task updated!", taskUpdated });
+        return res.status(201).json({ message: "task updated!", taskUpdated });
+      }
     } catch (error) {
       return next(error);
     }
