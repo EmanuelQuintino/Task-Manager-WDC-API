@@ -7,15 +7,19 @@ export type CreateTaskDataTypes = TaskDataTypes & { user_id: string };
 type Repository = {
   createTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
   getTask(id: string): Promise<{ user_id: string } | undefined>;
-  getUserTasks(userID: string, limit: string, offset: string): Promise<{} | undefined>;
   updateTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
   deleteTaskByID(id: string, user_id: string): Promise<{} | undefined>;
+  getUserTasks(userID: string, limit: string, offset: string): Promise<{} | undefined>;
 };
 
 export const taskServices = {
   async create(data: CreateTaskDataTypes, repository: Repository) {
     try {
       const { title, description, date, user_id } = data;
+
+      if (new Date(date) < new Date()) {
+        throw appError("date cannot be before the current time!", 400);
+      }
 
       const task = {
         id: randomUUID(),
@@ -46,6 +50,10 @@ export const taskServices = {
   async update(id: string, data: CreateTaskDataTypes, repository: Repository) {
     try {
       const { title, description, date, user_id } = data;
+
+      if (new Date(date) < new Date()) {
+        throw appError("date cannot be before the current time!", 400);
+      }
 
       const task = await repository.getTask(id);
       if (!task) throw appError("task not found!", 404);
