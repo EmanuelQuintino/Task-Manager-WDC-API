@@ -2,14 +2,10 @@ import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { appError } from "../errors/appError";
 import { LoginDataTypes } from "../validations/loginSchema";
-import { UserDataCreate } from "../repositories/userRepository";
-
-type Repository = {
-  getUserByEmail(email: string): Promise<UserDataCreate | undefined>;
-};
+import { UserRepositoryTypes } from "./userServices";
 
 export const authServices = {
-  async login(data: LoginDataTypes, repository: Repository) {
+  async login(data: LoginDataTypes, repository: UserRepositoryTypes) {
     try {
       const { email, password } = data;
 

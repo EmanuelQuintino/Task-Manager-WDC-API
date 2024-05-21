@@ -1,16 +1,17 @@
 import { randomUUID } from "node:crypto";
 import { hash } from "bcrypt";
-import { UserDataCreate } from "../repositories/userRepository";
+import { CreateUserDataType } from "../repositories/userRepository";
 import { appError } from "../errors/appError";
 import { UserDataTypes } from "../validations/userSchema";
 
-type Repository = {
-  createUser(data: UserDataCreate): Promise<{} | undefined>;
+export type UserRepositoryTypes = {
+  createUser(data: CreateUserDataType): Promise<{} | undefined>;
   getUserByID(id: string): Promise<{ password?: string } | undefined>;
+  getUserByEmail(email: string): Promise<{ id: string; password: string } | undefined>;
 };
 
 export const userServices = {
-  async create(data: UserDataTypes, repository: Repository) {
+  async create(data: UserDataTypes, repository: UserRepositoryTypes) {
     try {
       const { name, email, password } = data;
 
@@ -31,7 +32,7 @@ export const userServices = {
     }
   },
 
-  async read(id: string, repository: Repository) {
+  async read(id: string, repository: UserRepositoryTypes) {
     try {
       const userData = await repository.getUserByID(id);
 
