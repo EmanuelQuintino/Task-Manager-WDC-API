@@ -11,7 +11,7 @@ type Repository = {
   getTask(id: string): Promise<{ user_id: string } | undefined>;
   updateTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
   deleteTaskByID(id: string, user_id: string): Promise<{} | undefined>;
-  getUserTasks({
+  getTasks({
     userID,
     limit,
     offset,
@@ -53,7 +53,7 @@ export const taskServices = {
         throw appError("please inform query params limit, offset and status!", 400);
       }
 
-      const userTasks = await repository.getUserTasks({ userID, limit, offset, status });
+      const userTasks = await repository.getTasks({ userID, limit, offset, status });
 
       return { userTasks };
     } catch (error) {

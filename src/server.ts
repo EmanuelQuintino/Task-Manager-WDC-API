@@ -14,10 +14,11 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cookieParser());
 
-const whitelist = ["http://localhost:5173", "http://127.0.0.1:5173"];
+const whiteList = ["http://localhost:5173", "http://127.0.0.1:5173"];
+
 app.use(
   cors({
-    origin: whitelist,
+    origin: whiteList,
     credentials: true,
   })
 );

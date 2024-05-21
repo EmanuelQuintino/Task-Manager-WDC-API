@@ -33,7 +33,7 @@ export const taskRepository = {
     }
   },
 
-  async getUserTasks({ userID, limit, offset, status }: UserTasksPagination) {
+  async getTasks({ userID, limit, offset, status }: UserTasksPagination) {
     try {
       const db = await sqliteConnection();
 
