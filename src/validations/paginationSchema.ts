@@ -20,10 +20,10 @@ export const paginationSchema = z
       .regex(/^\d+$/, "offset must have only numbers!")
       .optional(),
 
-    status: z
+    filter: z
       .enum(["completed", "pending", "all"], {
-        invalid_type_error: "status must be a string!",
-        required_error: "status is required and must be 'completed', 'pending' or 'all'",
+        invalid_type_error: "filter must be a string!",
+        required_error: "filter is required and must be 'completed', 'pending' or 'all'",
       })
       .optional(),
   })

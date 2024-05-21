@@ -33,11 +33,11 @@ export const taskRepository = {
     }
   },
 
-  async getTasks({ userID, limit, offset, status }: UserTasksPagination) {
+  async getTasks({ userID, limit, offset, filter }: UserTasksPagination) {
     try {
       const db = await sqliteConnection();
 
-      if (status == "all") {
+      if (filter == "all") {
         const querySQL = `
           SELECT * FROM tasks 
           WHERE user_id = ?
@@ -56,7 +56,7 @@ export const taskRepository = {
           LIMIT ? OFFSET ?;
         `;
 
-        const tasks = await db.all(querySQL, [userID, status, limit, offset]);
+        const tasks = await db.all(querySQL, [userID, filter, limit, offset]);
 
         return tasks;
       }

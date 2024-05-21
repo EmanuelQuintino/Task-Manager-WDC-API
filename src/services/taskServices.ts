@@ -15,7 +15,7 @@ type Repository = {
     userID,
     limit,
     offset,
-    status,
+    filter,
   }: UserTasksPagination): Promise<{} | undefined>;
 };
 
@@ -47,13 +47,13 @@ export const taskServices = {
 
   async read(data: UserTasksPagination, repository: Repository) {
     try {
-      const { userID, limit, offset, status } = data;
+      const { userID, limit, offset, filter } = data;
 
-      if (!limit || !offset || !status) {
-        throw appError("please inform query params limit, offset and status!", 400);
+      if (!limit || !offset || !filter) {
+        throw appError("please inform query params limit, offset and filter!", 400);
       }
 
-      const userTasks = await repository.getTasks({ userID, limit, offset, status });
+      const userTasks = await repository.getTasks({ userID, limit, offset, filter });
 
       return { userTasks };
     } catch (error) {

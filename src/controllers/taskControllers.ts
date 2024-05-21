@@ -24,7 +24,7 @@ export const taskControllers = {
 
   async read(req: Request, res: Response, next: NextFunction) {
     try {
-      const { limit, offset, status } = paginationSchema.parse(req.query);
+      const { limit, offset, filter } = paginationSchema.parse(req.query);
       const { id } = UUIDSchema("user").parse({ id: req.userID });
 
       const userTasks = await taskServices.read(
@@ -32,7 +32,7 @@ export const taskControllers = {
           userID: id,
           limit,
           offset,
-          status,
+          filter,
         },
         taskRepository
       );
