@@ -15,16 +15,20 @@ export const userServices = {
     try {
       const { name, email, password } = data;
 
+      const user = await repository.getUserByEmail(email);
+
+      if (user) throw appError("email already exists!", 400);
+
       const passwordHash = await hash(password, 10);
 
-      const user = {
+      const userData = {
         id: randomUUID(),
         name,
         email,
         password: passwordHash,
       };
 
-      const userCreated = await repository.createUser(user);
+      const userCreated = await repository.createUser(userData);
 
       return userCreated;
     } catch (error) {
