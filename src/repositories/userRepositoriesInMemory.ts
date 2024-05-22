@@ -5,14 +5,14 @@ const users = [
     id: "1",
     name: "user1",
     email: "user1@email.com",
-    password: "qweQWE123!@#",
+    password: "$2b$10$7LxCCXAAvkWj8di5um53eOiy2HThbqoLSm07g5Eahm4DmDJbTYrTe",
   },
 
   {
     id: "2",
     name: "user2",
     email: "user2@email.com",
-    password: "qweQWE123!@#",
+    password: "$2b$10$7LxCCXAAvkWj8di5um53eOiy2HThbqoLSm07g5Eahm4DmDJbTYrTe",
   },
 ];
 

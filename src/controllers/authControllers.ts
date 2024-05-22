@@ -8,7 +8,7 @@ export const authControllers = {
     try {
       const { email, password } = loginSchema.parse(req.body);
 
-      const token = await authServices.login({ email, password }, userRepository);
+      const { token } = await authServices.login({ email, password }, userRepository);
 
       res.cookie(process.env.KEY_TOKEN, token, {
         httpOnly: true,

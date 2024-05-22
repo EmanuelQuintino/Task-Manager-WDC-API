@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { userRepositoriesInMemory } from "../repositories/userRepositoriesInMemory";
-import { userServices } from "./userServices";
+import { userServices } from "../services/userServices";
 
-describe("test user services functions", async () => {
+describe("test create user functions", async () => {
   const user = {
     name: "Emanuel Quintino",
     email: "emanuelquintino@hotmail.com",
@@ -14,7 +14,7 @@ describe("test user services functions", async () => {
     expect(createUser).toHaveProperty("id");
   });
 
-  it("should not create user if email is repeated", async () => {
+  it("should not create user if email already exists", async () => {
     try {
       await userServices.create(user, userRepositoriesInMemory);
     } catch (error: any) {
@@ -22,3 +22,5 @@ describe("test user services functions", async () => {
     }
   });
 });
+
+
