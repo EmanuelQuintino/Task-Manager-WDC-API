@@ -17,7 +17,7 @@ describe("test authentication login functions", async () => {
   it("should not log in user with invalid email", async () => {
     try {
       const token = await authServices.login(
-        { ...user, email: "invalid@email.com" },
+        { ...user, email: "invalid" },
         userRepositoryInMemory
       );
 
