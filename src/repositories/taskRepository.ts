@@ -5,12 +5,16 @@ type TaskDataCreate = CreateTaskDataTypes & { id: string };
 type TaskDataUpdate = TaskDataCreate & { updated_at: Date };
 
 export const taskRepository = {
-  async createTask({ id, title, description, date, status, user_id }: TaskDataCreate) {
+  async createTask(data: TaskDataCreate) {
     try {
+      const { id, title, description, date, status, user_id } = data;
+
       const db = await sqliteConnection();
 
-      const querySQL =
-        "INSERT INTO tasks (id, title, description, date, status, user_id) VALUES (?, ?, ?, ?, ?. ?)";
+      const querySQL = `
+        INSERT INTO tasks (id, title, description, date, status, user_id)
+        VALUES (?, ?, ?, ?, ?, ?);
+      `;
 
       await db.run(querySQL, [id, title, description, date, status, user_id]);
 
@@ -65,8 +69,10 @@ export const taskRepository = {
     }
   },
 
-  async updateTask({ id, title, description, date, status, updated_at }: TaskDataUpdate) {
+  async updateTask(data: TaskDataUpdate) {
     try {
+      const { id, title, description, date, status, updated_at } = data;
+
       const db = await sqliteConnection();
 
       const querySQL = `
@@ -87,7 +93,7 @@ export const taskRepository = {
     try {
       const db = await sqliteConnection();
 
-      const querySQL = "DELETE FROM tasks WHERE id == ?";
+      const querySQL = "DELETE FROM tasks WHERE id = ?;";
       const deleteTaskResult = await db.run(querySQL, [id]);
 
       return deleteTaskResult;

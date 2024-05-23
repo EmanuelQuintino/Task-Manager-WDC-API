@@ -8,9 +8,9 @@ export type UserTasksPagination = PaginationDataTypes & { userID: string };
 
 type Repository = {
   createTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
-  getTask(id: string): Promise<{ user_id: string } | undefined>;
+  getTask(id: string): Promise<CreateTaskDataTypes | undefined>;
   updateTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
-  deleteTaskByID(id: string, user_id: string): Promise<{} | undefined>;
+  deleteTaskByID(id: string): Promise<{} | undefined>;
   getTasks({
     userID,
     limit,
@@ -107,7 +107,7 @@ export const taskServices = {
         throw appError("user not authorized to delete task!", 401);
       }
 
-      const deleteTaskResult = await repository.deleteTaskByID(id, user_id);
+      const deleteTaskResult = await repository.deleteTaskByID(id);
 
       if (!deleteTaskResult) throw appError("task not deleted!", 400);
 

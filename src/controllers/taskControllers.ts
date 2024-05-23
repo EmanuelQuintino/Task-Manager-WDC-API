@@ -56,7 +56,7 @@ export const taskControllers = {
           taskRepository
         );
 
-        return res.status(201).json({ message: "task updated!", taskUpdated });
+        return res.status(200).json({ message: "task updated!", taskUpdated });
       }
     } catch (error) {
       return next(error);
