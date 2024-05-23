@@ -15,7 +15,7 @@ export const userRepository = {
 
       await db.run(querySQL, [id, name, email, password]);
 
-      return id;
+      return { id, name, email, password };
     } catch (error) {
       throw error;
     }

@@ -5,7 +5,7 @@ import { appError } from "../errors/appError";
 import { UserDataTypes } from "../validations/userSchema";
 
 export type UserRepositoryTypes = {
-  createUser(data: CreateUserDataType): Promise<{} | undefined>;
+  createUser(data: CreateUserDataType): Promise<CreateUserDataType | undefined>;
   getUserByID(id: string): Promise<{ password?: string } | undefined>;
   getUserByEmail(email: string): Promise<UserDataTypes | undefined>;
 };
@@ -30,7 +30,7 @@ export const userServices = {
 
       const userCreated = await repository.createUser(userData);
 
-      return { id: userCreated };
+      return userCreated;
     } catch (error) {
       throw error;
     }
