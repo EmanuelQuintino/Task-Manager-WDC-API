@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { userRepositoriesInMemory } from "../repositories/userRepositoriesInMemory";
+import { userRepositoryInMemory } from "../repositories/userRepositoryInMemory";
 import { authServices } from "../services/authServices";
 import "dotenv/config";
 
@@ -10,16 +10,20 @@ describe("test authentication login functions", async () => {
   };
 
   it("should user log in", async () => {
-    const login = await authServices.login(user, userRepositoriesInMemory);
+    const login = await authServices.login(user, userRepositoryInMemory);
     expect(login).toHaveProperty("token");
   });
 
   it("should not log in user with invalid email", async () => {
     try {
-      await authServices.login(
+      const token = await authServices.login(
         { ...user, email: "invalid@email.com" },
-        userRepositoriesInMemory
+        userRepositoryInMemory
       );
+
+      if (token) {
+        throw new Error("expected email invalid error but the user was logged!");
+      }
     } catch (error: any) {
       expect(error.message).toBe("email or password invalid!");
     }
@@ -27,10 +31,14 @@ describe("test authentication login functions", async () => {
 
   it("should not log in user with invalid password", async () => {
     try {
-      await authServices.login(
+      const token = await authServices.login(
         { ...user, password: "invalid" },
-        userRepositoriesInMemory
+        userRepositoryInMemory
       );
+
+      if (token) {
+        throw new Error("expected password invalid error but the user was logged!");
+      }
     } catch (error: any) {
       expect(error.message).toBe("email or password invalid!");
     }

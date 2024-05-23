@@ -2,25 +2,21 @@ import { randomUUID } from "node:crypto";
 import { appError } from "../errors/appError";
 import { TaskDataTypes } from "../validations/taskSchema";
 import { PaginationDataTypes } from "../validations/paginationSchema";
+import { CreateTaskDataTypes, UpdateTaskDataTypes } from "../repositories/taskRepository";
 
-export type CreateTaskDataTypes = TaskDataTypes & { user_id: string };
+export type TaskDataCreate = TaskDataTypes & { user_id: string };
 export type UserTasksPagination = PaginationDataTypes & { userID: string };
 
 type Repository = {
-  createTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
+  createTask(data: TaskDataCreate): Promise<{} | undefined>;
   getTask(id: string): Promise<CreateTaskDataTypes | undefined>;
-  updateTask(data: CreateTaskDataTypes): Promise<{} | undefined>;
+  getTasks(data: UserTasksPagination): Promise<{} | undefined>;
+  updateTask(data: UpdateTaskDataTypes): Promise<{} | undefined>;
   deleteTaskByID(id: string): Promise<{} | undefined>;
-  getTasks({
-    userID,
-    limit,
-    offset,
-    filter,
-  }: UserTasksPagination): Promise<{} | undefined>;
 };
 
 export const taskServices = {
-  async create(data: CreateTaskDataTypes, repository: Repository) {
+  async create(data: TaskDataCreate, repository: Repository) {
     try {
       const { title, description, date, status, user_id } = data;
 
@@ -55,13 +51,13 @@ export const taskServices = {
 
       const userTasks = await repository.getTasks({ userID, limit, offset, filter });
 
-      return { userTasks };
+      return userTasks;
     } catch (error) {
       throw error;
     }
   },
 
-  async update(id: string, data: CreateTaskDataTypes, repository: Repository) {
+  async update(id: string, data: TaskDataCreate, repository: Repository) {
     try {
       const { title, description, date, status, user_id } = data;
 
@@ -83,16 +79,12 @@ export const taskServices = {
         date,
         status,
         user_id,
-        updated_at: new Date()
-          .toISOString()
-          .replace("T", " ")
-          .replace("Z", "")
-          .split(".")[0],
+        updated_at: new Date(),
       };
 
-      const taskCreated = await repository.updateTask(taskToUpdate);
+      const taskUpdate = await repository.updateTask(taskToUpdate);
 
-      return taskCreated;
+      return taskUpdate;
     } catch (error) {
       throw error;
     }

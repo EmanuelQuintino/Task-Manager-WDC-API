@@ -1,11 +1,11 @@
 import { sqliteConnection } from "../databases/sqlite3";
-import { CreateTaskDataTypes, UserTasksPagination } from "../services/taskServices";
+import { TaskDataCreate, UserTasksPagination } from "../services/taskServices";
 
-type TaskDataCreate = CreateTaskDataTypes & { id: string };
-type TaskDataUpdate = TaskDataCreate & { updated_at: Date };
+export type CreateTaskDataTypes = TaskDataCreate & { id: string };
+export type UpdateTaskDataTypes = CreateTaskDataTypes & { updated_at: Date };
 
 export const taskRepository = {
-  async createTask(data: TaskDataCreate) {
+  async createTask(data: CreateTaskDataTypes) {
     try {
       const { id, title, description, date, status, user_id } = data;
 
@@ -37,8 +37,10 @@ export const taskRepository = {
     }
   },
 
-  async getTasks({ userID, limit, offset, filter }: UserTasksPagination) {
+  async getTasks(data: UserTasksPagination) {
     try {
+      const { userID, limit, offset, filter } = data;
+
       const db = await sqliteConnection();
 
       if (filter == "all") {
@@ -51,7 +53,7 @@ export const taskRepository = {
 
         const tasks = await db.all(querySQL, [userID, limit, offset]);
 
-        return tasks;
+        return { tasks };
       } else {
         const querySQL = `
           SELECT * FROM tasks 
@@ -62,14 +64,14 @@ export const taskRepository = {
 
         const tasks = await db.all(querySQL, [userID, filter, limit, offset]);
 
-        return tasks;
+        return { tasks };
       }
     } catch (error) {
       throw error;
     }
   },
 
-  async updateTask(data: TaskDataUpdate) {
+  async updateTask(data: UpdateTaskDataTypes) {
     try {
       const { id, title, description, date, status, updated_at } = data;
 

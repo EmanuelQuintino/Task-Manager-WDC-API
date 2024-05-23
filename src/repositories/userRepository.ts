@@ -15,7 +15,7 @@ export const userRepository = {
 
       await db.run(querySQL, [id, name, email, password]);
 
-      return { id };
+      return id;
     } catch (error) {
       throw error;
     }
@@ -26,9 +26,9 @@ export const userRepository = {
       const db = await sqliteConnection();
 
       const querySQL = "SELECT * FROM users WHERE id == ?";
-      const userData = await db.get(querySQL, [id]);
+      const user = await db.get(querySQL, [id]);
 
-      return userData;
+      return user;
     } catch (error) {
       throw error;
     }

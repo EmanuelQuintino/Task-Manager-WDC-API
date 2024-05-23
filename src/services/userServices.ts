@@ -7,7 +7,7 @@ import { UserDataTypes } from "../validations/userSchema";
 export type UserRepositoryTypes = {
   createUser(data: CreateUserDataType): Promise<{} | undefined>;
   getUserByID(id: string): Promise<{ password?: string } | undefined>;
-  getUserByEmail(email: string): Promise<{ id: string; password: string } | undefined>;
+  getUserByEmail(email: string): Promise<UserDataTypes | undefined>;
 };
 
 export const userServices = {
@@ -30,7 +30,7 @@ export const userServices = {
 
       const userCreated = await repository.createUser(userData);
 
-      return userCreated;
+      return { id: userCreated };
     } catch (error) {
       throw error;
     }
@@ -44,7 +44,7 @@ export const userServices = {
 
       delete userData.password;
 
-      return userData;
+      return { user: userData };
     } catch (error) {
       throw error;
     }

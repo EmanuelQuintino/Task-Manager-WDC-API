@@ -16,7 +16,7 @@ const users = [
   },
 ];
 
-export const userRepositoriesInMemory = {
+export const userRepositoryInMemory = {
   async createUser(data: CreateUserDataType) {
     try {
       const { id, name, email, password } = data;
@@ -39,7 +39,6 @@ export const userRepositoriesInMemory = {
   async getUserByID(id: string) {
     try {
       const user = users.find((user) => user.id == id);
-
       return user;
     } catch (error) {
       throw error;
@@ -49,7 +48,6 @@ export const userRepositoriesInMemory = {
   async getUserByEmail(email: string) {
     try {
       const user = users.find((user) => user.email == email);
-
       return user;
     } catch (error) {
       throw error;
