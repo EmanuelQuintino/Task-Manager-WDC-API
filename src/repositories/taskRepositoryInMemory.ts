@@ -26,7 +26,7 @@ const tasks = [
     description: "description",
     date: "2024-05-22T16:00:00Z",
     status: "pending",
-    user_id: "1",
+    user_id: "2",
   },
 ];
 
@@ -35,8 +35,8 @@ export const taskRepositoryInMemory = {
     try {
       const { id, title, description, date, status, user_id } = data;
 
-      if (status !== "completed" && status !== "pending") {
-        throw new Error("Invalid status. Status must be 'completed' or 'pending'.");
+      if (status != "completed" && status != "pending") {
+        throw new Error("status must be 'completed' or 'pending'!");
       }
 
       const task = {
@@ -50,7 +50,7 @@ export const taskRepositoryInMemory = {
 
       tasks.push(task);
 
-      return tasks[tasks.length - 1];
+      return tasks[tasks.length - 1] as CreateTaskDataTypes;
     } catch (error) {
       throw error;
     }
@@ -59,7 +59,7 @@ export const taskRepositoryInMemory = {
   async getTask(id: string) {
     try {
       const task = tasks.find((task) => task.id == id);
-      return task;
+      return task as CreateTaskDataTypes;
     } catch (error) {
       throw error;
     }
@@ -69,16 +69,18 @@ export const taskRepositoryInMemory = {
     try {
       const { userID, limit, offset, filter } = data;
 
-      const filteredTasks = tasks.filter((task) => task.user_id === userID);
+      if (filter != "all" && filter != "completed" && filter != "pending") {
+        throw new Error("filter must be ''all', completed' or 'pending'!");
+      }
+
+      const userTasks = tasks.filter((task) => task.user_id === userID);
 
       if (filter !== "all") {
-        return filteredTasks;
+        return userTasks as CreateTaskDataTypes[];
       } else {
-        const paginatedTasks = filteredTasks.filter((task) => {
-          return task.status === filter;
-        });
-
-        return paginatedTasks;
+        const filteredUserTasks = userTasks.filter((task) => task.status == filter);
+        const paginatedTasks = filteredUserTasks.reverse();
+        return paginatedTasks as CreateTaskDataTypes[];
       }
     } catch (error) {
       throw error;
@@ -88,6 +90,10 @@ export const taskRepositoryInMemory = {
   async updateTask(data: UpdateTaskDataTypes) {
     try {
       const { id, title, description, date, status, user_id, updated_at } = data;
+
+      if (status != "completed" && status != "pending") {
+        throw new Error("status must be 'completed' or 'pending'!");
+      }
 
       const task = {
         id,
@@ -101,7 +107,7 @@ export const taskRepositoryInMemory = {
 
       tasks.push(task);
 
-      return tasks[tasks.length - 1];
+      return tasks[tasks.length - 1] as UpdateTaskDataTypes;
     } catch (error) {
       throw error;
     }
