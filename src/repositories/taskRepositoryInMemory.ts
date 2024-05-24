@@ -5,21 +5,28 @@ const tasks = [
   {
     id: "1",
     title: "task1",
-    description: "description1",
+    description: "description",
     date: "2024-05-22T16:00:00Z",
     status: "pending",
     user_id: "1",
-    updated_at: "2024-05-22T00:00:00Z",
   },
 
   {
     id: "2",
     title: "task2",
-    description: "description2",
+    description: "description",
+    date: "2024-05-22T16:00:00Z",
+    status: "completed",
+    user_id: "1",
+  },
+
+  {
+    id: "3",
+    title: "task3",
+    description: "description",
     date: "2024-05-22T16:00:00Z",
     status: "pending",
     user_id: "1",
-    updated_at: "2024-05-22T00:00:00Z",
   },
 ];
 
@@ -57,7 +64,18 @@ export const taskRepositoryInMemory = {
   async getTasks(data: UserTasksPagination) {
     try {
       const { userID, limit, offset, filter } = data;
-      return "userTasks";
+
+      const filteredTasks = tasks.filter((task) => task.user_id === userID);
+
+      if (filter !== "all") {
+        return filteredTasks;
+      } else {
+        const paginatedTasks = filteredTasks.filter((task) => {
+          return task.status === filter;
+        });
+
+        return paginatedTasks;
+      }
     } catch (error) {
       throw error;
     }
