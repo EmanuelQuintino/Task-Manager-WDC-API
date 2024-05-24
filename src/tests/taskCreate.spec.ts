@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { TaskDataCreate, taskServices } from "../services/taskServices";
 import { taskRepositoryInMemory } from "../repositories/taskRepositoryInMemory";
 
@@ -16,22 +16,20 @@ describe("test create task functions", async () => {
       new Date().setHours(new Date().getHours() + 1)
     ).toISOString(); // now + 1h
 
-    console.log(futureDate);
-
     const taskCreated = await taskServices.create(
       { ...task, date: futureDate },
       taskRepositoryInMemory
     );
 
-    // title break controllers
     expect(taskCreated?.title).toEqual(task.title);
     expect(taskCreated).toHaveProperty("id");
   });
 
   it("should not create task if date be before the current time!", async () => {
     try {
+      const pastDate = new Date("2024-05-23T00:00:00Z").toISOString();
       const taskCreated = await taskServices.create(
-        { ...task, date: new Date("2024-05-23T00:00:00Z").toISOString() },
+        { ...task, date: pastDate },
         taskRepositoryInMemory
       );
 

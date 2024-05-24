@@ -35,6 +35,10 @@ export const taskRepositoryInMemory = {
     try {
       const { id, title, description, date, status, user_id } = data;
 
+      if (status !== "completed" && status !== "pending") {
+        throw new Error("Invalid status. Status must be 'completed' or 'pending'.");
+      }
+
       const task = {
         id,
         title,
@@ -46,7 +50,7 @@ export const taskRepositoryInMemory = {
 
       tasks.push(task);
 
-      return task;
+      return tasks[tasks.length - 1];
     } catch (error) {
       throw error;
     }
@@ -105,8 +109,13 @@ export const taskRepositoryInMemory = {
 
   async deleteTaskByID(id: string) {
     try {
-      const task = tasks.find((task) => task.id == id);
-      return task;
+      const index = tasks.findIndex((task) => task.id == id);
+
+      if (index == -1) return;
+
+      tasks.splice(index, 1);
+
+      return { id };
     } catch (error) {
       throw error;
     }

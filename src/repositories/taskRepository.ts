@@ -18,7 +18,7 @@ export const taskRepository = {
 
       await db.run(querySQL, [id, title, description, date, status, user_id]);
 
-      return { id };
+      return { id, title, description, date, status, user_id };
     } catch (error) {
       throw error;
     }
@@ -53,7 +53,7 @@ export const taskRepository = {
 
         const tasks = await db.all(querySQL, [userID, limit, offset]);
 
-        return { tasks };
+        return tasks;
       } else {
         const querySQL = `
           SELECT * FROM tasks 
@@ -64,7 +64,7 @@ export const taskRepository = {
 
         const tasks = await db.all(querySQL, [userID, filter, limit, offset]);
 
-        return { tasks };
+        return tasks;
       }
     } catch (error) {
       throw error;
@@ -73,7 +73,7 @@ export const taskRepository = {
 
   async updateTask(data: UpdateTaskDataTypes) {
     try {
-      const { id, title, description, date, status, updated_at } = data;
+      const { id, title, description, date, status, user_id, updated_at } = data;
 
       const db = await sqliteConnection();
 
@@ -85,7 +85,7 @@ export const taskRepository = {
 
       await db.run(querySQL, [title, description, date, status, updated_at, id]);
 
-      return { id };
+      return { id, title, description, date, status, user_id, updated_at };
     } catch (error) {
       throw error;
     }
@@ -96,9 +96,9 @@ export const taskRepository = {
       const db = await sqliteConnection();
 
       const querySQL = "DELETE FROM tasks WHERE id = ?;";
-      const deleteTaskResult = await db.run(querySQL, [id]);
+      await db.run(querySQL, [id]);
 
-      return deleteTaskResult;
+      return { id };
     } catch (error) {
       throw error;
     }
