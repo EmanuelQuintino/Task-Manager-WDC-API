@@ -69,13 +69,9 @@ export const taskRepositoryInMemory = {
     try {
       const { userID, limit, offset, filter } = data;
 
-      if (filter != "all" && filter != "completed" && filter != "pending") {
-        throw new Error("filter must be ''all', completed' or 'pending'!");
-      }
-
       const userTasks = tasks.filter((task) => task.user_id === userID);
 
-      if (filter !== "all") {
+      if (filter == "all") {
         return userTasks as CreateTaskDataTypes[];
       } else {
         const filteredUserTasks = userTasks.filter((task) => task.status == filter);
