@@ -8,7 +8,7 @@
     "build": "tsup src",
     "start": "node dist/server.js",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest --coverage"
   },
   "keywords": [
     "node.js",
@@ -25,6 +25,7 @@
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/uuid": "^9.0.8",
+    "@vitest/coverage-v8": "^1.6.0",
     "tsup": "^8.0.2",
     "tsx": "^4.7.1",
     "typescript": "^5.4.2",
