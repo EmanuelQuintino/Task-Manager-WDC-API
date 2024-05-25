@@ -47,7 +47,7 @@ export const userServices = {
 
       delete userData.password;
 
-      return { user: userData };
+      return userData;
     } catch (error) {
       throw error;
     }
