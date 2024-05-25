@@ -9,13 +9,13 @@ describe("test create user functions", async () => {
     password: "1234567",
   };
 
-  it("should create a user", async () => {
+  it("should create a user!", async () => {
     const userCreated = await userServices.create(user, userRepositoryInMemory);
     expect(userCreated?.email).toEqual(user.email);
     expect(userCreated).toHaveProperty("id");
   });
 
-  it("should not create user if email already exists", async () => {
+  it("should not create user if email already exists!", async () => {
     try {
       const userCreated = await userServices.create(user, userRepositoryInMemory);
       if (userCreated) throw new Error("expected an error but the user was created!");

@@ -9,12 +9,12 @@ describe("test authentication login functions", async () => {
     password: "1234567",
   };
 
-  it("should user log in", async () => {
+  it("should log the user in!", async () => {
     const login = await authServices.login(user, userRepositoryInMemory);
     expect(login).toHaveProperty("token");
   });
 
-  it("should not log in user with invalid email", async () => {
+  it("should not log user in with invalid email!", async () => {
     try {
       const token = await authServices.login(
         { ...user, email: "invalid" },
@@ -29,7 +29,7 @@ describe("test authentication login functions", async () => {
     }
   });
 
-  it("should not log in user with invalid password", async () => {
+  it("should not log user in with invalid password!", async () => {
     try {
       const token = await authServices.login(
         { ...user, password: "invalid" },

@@ -37,7 +37,7 @@ export const taskControllers = {
         taskRepository
       );
 
-      return res.status(200).json(userTasks);
+      return res.status(200).json({ userTasks });
     } catch (error) {
       return next(error);
     }

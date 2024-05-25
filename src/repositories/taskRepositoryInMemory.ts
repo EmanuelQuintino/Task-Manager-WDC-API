@@ -105,9 +105,13 @@ export const taskRepositoryInMemory = {
         updated_at,
       };
 
-      tasks.push(task);
+      const index = tasks.findIndex((task) => task.id == id);
 
-      return tasks[tasks.length - 1] as UpdateTaskDataTypes;
+      if (index == -1) return;
+
+      tasks[index] = task;
+
+      return tasks[index] as UpdateTaskDataTypes;
     } catch (error) {
       throw error;
     }

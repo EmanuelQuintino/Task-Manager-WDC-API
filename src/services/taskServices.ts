@@ -99,11 +99,11 @@ export const taskServices = {
         throw appError("user not authorized to delete task!", 401);
       }
 
-      const taskDeketed = await repository.deleteTaskByID(id);
+      const taskDeleted = await repository.deleteTaskByID(id);
 
-      if (!taskDeketed) throw appError("task not deleted!", 400);
+      if (!taskDeleted) throw appError("task not deleted!", 500);
 
-      return taskDeketed;
+      return taskDeleted;
     } catch (error) {
       throw error;
     }
