@@ -25,10 +25,27 @@ export const userRepository = {
     try {
       const db = await sqliteConnection();
 
-      const querySQL = "SELECT * FROM users WHERE id == ?";
-      const user = await db.get(querySQL, [id]);
+      const queryUserSQL = "SELECT * FROM users WHERE id == ?";
+      const user = await db.get(queryUserSQL, [id]);
 
-      return user;
+      const queryTasksSQL = `
+        SELECT
+          COUNT(*) AS total,
+          SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) AS pending,
+          SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) AS completed
+        FROM tasks
+        WHERE user_id = ?;
+      `;
+
+      const dataTasks = await db.get(queryTasksSQL, [id]);
+
+      const tasksInfo = {
+        total: dataTasks.total,
+        pending: dataTasks.pending || 0,
+        completed: dataTasks.completed || 0,
+      };
+
+      return { ...user, tasksInfo };
     } catch (error) {
       throw error;
     }

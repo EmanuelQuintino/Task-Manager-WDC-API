@@ -30,6 +30,9 @@ export const userServices = {
 
       const userCreated = await repository.createUser(userData);
 
+      if (!userCreated) return;
+      userCreated.password = "*".repeat(userCreated.password.length);
+
       return userCreated;
     } catch (error) {
       throw error;
