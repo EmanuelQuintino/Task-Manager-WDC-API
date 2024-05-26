@@ -22,4 +22,15 @@ export const authControllers = {
       return next(error);
     }
   },
+
+  async logout(_req: Request, res: Response, next: NextFunction) {
+    try {
+      return res
+        .clearCookie(process.env.KEY_TOKEN)
+        .status(200)
+        .json({ message: "logout realizado com sucesso!" });
+    } catch (error) {
+      return next(error);
+    }
+  },
 };
