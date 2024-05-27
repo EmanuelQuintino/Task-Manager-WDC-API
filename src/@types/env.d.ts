@@ -4,5 +4,6 @@ declare namespace NodeJS {
     SECRET_TOKEN: string;
     EXPIRESIN_TOKEN: string;
     KEY_TOKEN: string;
+    BASEURL_API: string;
   }
 }
