@@ -29,7 +29,7 @@ export const taskServices = {
         title,
         description,
         date,
-        status,
+        status: status || "pending",
         user_id,
       };
 
@@ -77,7 +77,7 @@ export const taskServices = {
         title,
         description,
         date,
-        status,
+        status: status || "pending",
         user_id,
         updated_at: new Date(),
       };

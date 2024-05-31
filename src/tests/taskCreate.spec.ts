@@ -7,7 +7,6 @@ describe("test create task functions", async () => {
     title: "task test",
     description: "description test",
     date: "2024-05-22T00:00:00Z",
-    status: "pending",
     user_id: "1",
   } as TaskDataCreate;
 
@@ -23,6 +22,7 @@ describe("test create task functions", async () => {
 
     expect(taskCreated?.title).toEqual(task.title);
     expect(taskCreated).toHaveProperty("id");
+    expect(taskCreated).toHaveProperty("status");
   });
 
   it("should not create task if date be before the current time!", async () => {
