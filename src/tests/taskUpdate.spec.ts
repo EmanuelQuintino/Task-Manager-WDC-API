@@ -11,9 +11,7 @@ describe("test update task functions", async () => {
     user_id: "1",
   } as TaskDataCreate;
 
-  const futureDate = new Date(
-    new Date().setHours(new Date().getDate() + 1)
-  ).toISOString(); // now + 1d
+  const futureDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(); // now + 1d
 
   it("should update a task!", async () => {
     const taskUpdated = await taskServices.update(

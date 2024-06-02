@@ -10,11 +10,10 @@ describe("test create task functions", async () => {
     user_id: "1",
   } as TaskDataCreate;
 
-  const futureDate = new Date(
-    new Date().setHours(new Date().getDate() + 1)
-  ).toISOString(); // now + 1d
+  const futureDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(); // now + 1d
 
   it("should create a task!", async () => {
+    console.log(futureDate);
     const taskCreated = await taskServices.create(
       { ...task, date: futureDate },
       taskRepositoryInMemory
