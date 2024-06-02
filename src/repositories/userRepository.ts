@@ -32,7 +32,8 @@ export const userRepository = {
         SELECT
           COUNT(*) AS total,
           SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) AS pending,
-          SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) AS completed
+          SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) AS completed,
+          SUM(CASE WHEN date < CURRENT_DATE THEN 1 ELSE 0 END) AS late
         FROM tasks
         WHERE user_id = ?;
       `;
@@ -41,8 +42,12 @@ export const userRepository = {
 
       const tasksInfo = {
         total: dataTasks.total,
-        pending: dataTasks.pending || 0,
-        completed: dataTasks.completed || 0,
+        completed: { total: dataTasks.completed || 0 },
+        pending: {
+          total: dataTasks.pending || 0,
+          open: (dataTasks.pending || 0) - (dataTasks.late || 0),
+          late: dataTasks.late || 0,
+        },
       };
 
       return { ...user, tasksInfo };

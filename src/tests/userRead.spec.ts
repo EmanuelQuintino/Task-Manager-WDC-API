@@ -6,6 +6,7 @@ describe("test read user functions", async () => {
   it("should read a user by ID!", async () => {
     const user = await userServices.read("1", userRepositoryInMemory);
     expect(user).toHaveProperty("id");
+    expect(user).not.toHaveProperty("password");
   });
 
   it("should not found user!", async () => {
