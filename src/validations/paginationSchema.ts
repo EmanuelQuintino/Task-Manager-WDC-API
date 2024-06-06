@@ -21,9 +21,9 @@ export const paginationSchema = z
       .optional(),
 
     filter: z
-      .enum(["completed", "pending", "all"], {
+      .enum(["completed", "pending", "late", "all"], {
         invalid_type_error: "filter must be a string!",
-        required_error: "filter is required and must be 'completed', 'pending' or 'all'",
+        required_error: "filter is required and must be 'completed', 'pending', 'late' or 'all'",
       })
       .optional(),
   })

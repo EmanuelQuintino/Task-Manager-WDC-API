@@ -1,4 +1,5 @@
 import { sqliteConnection } from "../databases/sqlite3";
+import { appError } from "../errors/appError";
 import { TaskDataCreate, UserTasksPagination } from "../services/taskServices";
 
 export type CreateTaskDataTypes = TaskDataCreate & { id: string };
@@ -42,30 +43,55 @@ export const taskRepository = {
       const { userID, limit, offset, filter } = data;
 
       const db = await sqliteConnection();
+      let querySQL = "";
+      let tasks = [];
 
-      if (filter == "all") {
-        const querySQL = `
-          SELECT * FROM tasks 
-          WHERE user_id = ?
-          ORDER BY created_at DESC 
-          LIMIT ? OFFSET ?;
-        `;
+      switch (filter) {
+        case "all":
+          querySQL = `
+            SELECT * FROM tasks 
+            WHERE user_id = ?
+            ORDER BY created_at DESC
+            LIMIT ? OFFSET ?;
+          `;
+          tasks = await db.all(querySQL, [userID, limit, offset]);
+          break;
 
-        const tasks = await db.all(querySQL, [userID, limit, offset]);
+        case "completed":
+          querySQL = `
+            SELECT * FROM tasks 
+            WHERE user_id = ? AND status = 'completed'
+            ORDER BY created_at DESC 
+            LIMIT ? OFFSET ?;
+          `;
+          tasks = await db.all(querySQL, [userID, limit, offset]);
+          break;
 
-        return tasks;
-      } else {
-        const querySQL = `
-          SELECT * FROM tasks 
-          WHERE user_id = ? AND status = ?
-          ORDER BY created_at DESC 
-          LIMIT ? OFFSET ?;
-        `;
+        case "pending":
+          querySQL = `
+            SELECT * FROM tasks 
+            WHERE user_id = ? AND status = 'pending' AND date >= CURRENT_DATE
+            ORDER BY created_at DESC 
+            LIMIT ? OFFSET ?;
+          `;
+          tasks = await db.all(querySQL, [userID, limit, offset]);
+          break;
 
-        const tasks = await db.all(querySQL, [userID, filter, limit, offset]);
+        case "late":
+          querySQL = `
+            SELECT * FROM tasks 
+            WHERE user_id = ? AND status = 'pending' AND date < CURRENT_DATE
+            ORDER BY created_at DESC 
+            LIMIT ? OFFSET ?;
+          `;
+          tasks = await db.all(querySQL, [userID, limit, offset]);
+          break;
 
-        return tasks;
+        default:
+          throw appError("invalid filter!", 400);
       }
+
+      return tasks;
     } catch (error) {
       throw error;
     }
