@@ -1,13 +1,13 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2024-05-25T14:03:29.679Z",
+  "__export_date": "2024-06-06T21:11:20.990Z",
   "__export_source": "insomnia.desktop.app:v9.2.0",
   "resources": [
     {
       "_id": "req_acf7083aa4d6429ab5b5f0852a5583dc",
       "parentId": "fld_c6e8b1059859450f909bf2b9abf07e4a",
-      "modified": 1716642284425,
+      "modified": 1717702363836,
       "created": 1716050610056,
       "url": "{{ _.baseURL }}/login",
       "name": "login",
@@ -15,7 +15,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"email\": \"user3@email.com\",\n\t\"password\": \"A!1234567\"\n}"
+        "text": "{\n\t\"email\": \"user1@email.com\",\n\t\"password\": \"A!1234567\"\n}"
       },
       "preRequestScript": "",
       "parameters": [],
@@ -56,6 +56,37 @@
       "description": "",
       "scope": "collection",
       "_type": "workspace"
+    },
+    {
+      "_id": "req_308db3b0986847f6828cc38edadcb4f4",
+      "parentId": "fld_c6e8b1059859450f909bf2b9abf07e4a",
+      "modified": 1717702300769,
+      "created": 1717702292352,
+      "url": "{{ _.baseURL }}/logout",
+      "name": "logout",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"email\": \"emanuelquintino@hotmail.com\",\n\t\"password\": \"A!1234567\"\n}"
+      },
+      "preRequestScript": "",
+      "parameters": [],
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "User-Agent", "value": "insomnia/9.2.0" }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715881644555.9531,
+      "isPrivate": false,
+      "pathParameters": [],
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
     },
     {
       "_id": "req_57c698fff47f4ed881887b3de19c113f",
@@ -174,9 +205,9 @@
     {
       "_id": "req_700480755f1c459dba69c94d9b04032e",
       "parentId": "fld_de11e6779d844ca0bff72518fd99216f",
-      "modified": 1716307020252,
+      "modified": 1717694938834,
       "created": 1716124056540,
-      "url": "{{ _.baseURL }}/tasks?limit=4&offset=0&filter=all",
+      "url": "{{ _.baseURL }}/tasks?limit=4&offset=0&filter=late",
       "name": "read",
       "description": "",
       "method": "GET",
@@ -274,39 +305,19 @@
     {
       "_id": "jar_47fd92af74a31a7a8f4bc8bab2f79db56de72ded",
       "parentId": "wrk_a5e0bb8681fa42daa0adfbc58d1ba511",
-      "modified": 1716642286651,
+      "modified": 1717702369191,
       "created": 1715881755238,
       "name": "Default Jar",
       "cookies": [
         {
           "key": "@task_manager_api:token",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkN2U4NGI1LWExOTEtNDhiZi04YWFiLTljN2EzODcxZTUyNCIsImlhdCI6MTcxNjY0MjI4NiwiZXhwIjoxNzE2NzA3MDg2fQ.ZS-fxKV2HkmDj_RBV6flsOZ9gPREyZCFn59pnB2C2t0",
-          "expires": "2024-05-26T07:04:46.000Z",
-          "maxAge": 64800,
+          "expires": "1970-01-01T00:00:00.000Z",
           "domain": "localhost",
           "path": "/",
-          "secure": true,
-          "httpOnly": true,
           "hostOnly": true,
-          "creation": "2024-05-18T17:15:58.876Z",
-          "lastAccessed": "2024-05-25T13:04:46.651Z",
-          "sameSite": "none",
-          "id": "e8413b71-8cf6-4164-81d1-2f1329abe037"
-        },
-        {
-          "key": "@task_manager_api:token",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJkMDE0OTA5LTc0Y2EtNDk5Ny1hMzJlLWNmZDcyNDkyMjNhYiIsImlhdCI6MTcxNjIwNzcyNSwiZXhwIjoxNzE2MjcyNTI1fQ.7llaVFcikfh0XNI8Cqf128hP0Z1mpAO2CYwZ6CFWHEI",
-          "expires": "2024-05-21T06:22:05.000Z",
-          "maxAge": 64800,
-          "domain": "task-manager-api-ykrr.onrender.com",
-          "path": "/",
-          "secure": true,
-          "httpOnly": true,
-          "hostOnly": true,
-          "creation": "2024-05-19T22:12:20.626Z",
-          "lastAccessed": "2024-05-20T12:22:06.109Z",
-          "sameSite": "none",
-          "id": "dde89874-3d5e-4733-8947-2e2d168ae0ea"
+          "creation": "2024-06-06T19:31:46.334Z",
+          "lastAccessed": "2024-06-06T19:32:49.191Z",
+          "id": "d47208a6-e274-46a9-bdeb-2de7bd0ba6de"
         }
       ],
       "_type": "cookie_jar"
