@@ -17,7 +17,7 @@ export const authControllers = {
         maxAge: 1000 * 60 * 60 * 18, // 18h
       });
 
-      return res.status(200).json({ message: "login successful!", id });
+      return res.status(200).json({ message: "login completed successfully!", id });
     } catch (error) {
       return next(error);
     }
@@ -28,7 +28,7 @@ export const authControllers = {
       return res
         .clearCookie(process.env.KEY_TOKEN)
         .status(200)
-        .json({ message: "logout realizado com sucesso!" });
+        .json({ message: "logout completed successfully!" });
     } catch (error) {
       return next(error);
     }
