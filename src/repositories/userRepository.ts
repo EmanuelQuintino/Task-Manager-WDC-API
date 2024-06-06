@@ -31,24 +31,14 @@ export const userRepository = {
       const queryTasksSQL = `
         SELECT
           COUNT(*) AS total,
-          SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) AS pending,
           SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) AS completed,
-          SUM(CASE WHEN date < CURRENT_DATE THEN 1 ELSE 0 END) AS late
+          SUM(CASE WHEN status = 'pending' AND date >= CURRENT_DATE THEN 1 ELSE 0 END) AS pending,
+          SUM(CASE WHEN status = 'pending' AND date < CURRENT_DATE THEN 1 ELSE 0 END) AS late
         FROM tasks
         WHERE user_id = ?;
       `;
 
-      const dataTasks = await db.get(queryTasksSQL, [id]);
-
-      const tasksInfo = {
-        total: dataTasks.total,
-        completed: { total: dataTasks.completed || 0 },
-        pending: {
-          total: dataTasks.pending || 0,
-          open: (dataTasks.pending || 0) - (dataTasks.late || 0),
-          late: dataTasks.late || 0,
-        },
-      };
+      const tasksInfo = await db.get(queryTasksSQL, [id]);
 
       return { ...user, tasksInfo };
     } catch (error) {
