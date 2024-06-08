@@ -42,22 +42,18 @@ KEY_TOKEN=""
 
 ## Endpoints
 
-### Authentication
+## Endpoints
 
-- `POST: ("/login")`: Starts the user session.
-- `POST: ("/logout")`: Closes the user session.
-
-### User
-
-- `GET: ("/user")`: Returns user information.
-- `POST: ("/user")`: Creates a new user.
-
-### Tasks
-
-- `POST: ("/task")`: Adds a new task.
-- `GET: ("/tasks")`: Returns all tasks.
-- `PUT: ("/task/:id")`: Updates an existing task.
-- `DELETE: ("/task/:id")`: Removes an existing task.
+| Functionality  | Method | Endpoint  | Description              |
+| -------------- | ------ | --------- | ------------------------ |
+| Authentication | POST   | /login    | Starts the user session  |
+|                | POST   | /logout   | Closes the user session  |
+| User           | GET    | /user     | Returns user information |
+|                | POST   | /user     | Creates a new user       |
+| Tasks          | POST   | /task     | Adds a new task          |
+|                | GET    | /tasks    | Returns all tasks        |
+|                | PUT    | /task/:id | Updates an existing task |
+|                | DELETE | /task/:id | Removes an existing task |
 
 ## Pagination
 
@@ -66,7 +62,7 @@ KEY_TOKEN=""
 - `offset`: Offset index.
 - `filter`: Filter options: all | completed | "pending" | "afternoon".
 
-**Example of Pagination Usage**: `/tasks?limit=4&offset=0&filter=late`
+**Example of Pagination Usage**: `/tasks?limit=10&offset=0&filter=all`
 
 ## Links
 
