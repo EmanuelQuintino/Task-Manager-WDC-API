@@ -38,16 +38,16 @@ KEY_TOKEN=""
 
 ## Routes
 
-| Functionality | Method   | Endpoint  | Description             |
-| ------------- | -------- | --------- | ----------------------- |
-| Auth          | `POST`   | /login    | Start the user session  |
-|               | `POST`   | /logout   | Close the user session  |
-| User          | `GET`    | /user     | Return user information |
-|               | `POST`   | /user     | Create a new user       |
-| Tasks         | `POST`   | /task     | Add a new task          |
-|               | `GET`    | /tasks    | Return pagination tasks |
-|               | `PUT`    | /task/:id | Update an existing task |
-|               | `DELETE` | /task/:id | Remove an existing task |
+| Functionality | Method   | Endpoint  | Description              |
+| ------------- | -------- | --------- | ------------------------ |
+| Auth          | `POST`   | /login    | Start the user session   |
+|               | `POST`   | /logout   | Close the user session   |
+| User          | `GET`    | /user     | Return user informations |
+|               | `POST`   | /user     | Create a new user        |
+| Tasks         | `POST`   | /task     | Add a new task           |
+|               | `GET`    | /tasks    | Return pagination tasks  |
+|               | `PUT`    | /task/:id | Update an existing task  |
+|               | `DELETE` | /task/:id | Remove an existing task  |
 
 ## Pagination Parameters
 
