@@ -4,10 +4,6 @@
 
 ![ERD](./erd.png)
 
-**Description:**
-
-The Task Manager is a full-stack web application developed as a final project for the Reprograma Jucás Web Development course. This application allows users to organize their tasks efficiently, offering advanced management and collaboration features.
-
 ## Technologies
 
 - `Node.js`
