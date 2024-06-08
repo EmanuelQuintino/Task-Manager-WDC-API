@@ -42,27 +42,23 @@ KEY_TOKEN=""
 
 ## Endpoints
 
-## Endpoints
+| Functionality  | Method | Route     | Description             |
+| -------------- | ------ | --------- | ----------------------- |
+| Authentication | POST   | /login    | Start the user session  |
+|                | POST   | /logout   | Close the user session  |
+| User           | GET    | /user     | Return user information |
+|                | POST   | /user     | Create a new user       |
+| Tasks          | POST   | /task     | Add a new task          |
+|                | GET    | /tasks    | Return pagination tasks |
+|                | PUT    | /task/:id | Update an existing task |
+|                | DELETE | /task/:id | Remove an existing task |
 
-| Functionality  | Method | Endpoint  | Description              |
-| -------------- | ------ | --------- | ------------------------ |
-| Authentication | POST   | /login    | Starts the user session  |
-|                | POST   | /logout   | Closes the user session  |
-| User           | GET    | /user     | Returns user information |
-|                | POST   | /user     | Creates a new user       |
-| Tasks          | POST   | /task     | Adds a new task          |
-|                | GET    | /tasks    | Returns all tasks        |
-|                | PUT    | /task/:id | Updates an existing task |
-|                | DELETE | /task/:id | Removes an existing task |
+## Pagination Parameters
 
-## Pagination
-
-- Parameters:
 - `limit`: Number of items per page.
 - `offset`: Offset index.
-- `filter`: Filter options: all | completed | "pending" | "afternoon".
-
-**Example of Pagination Usage**: `/tasks?limit=10&offset=0&filter=all`
+- `filter`: Filter options: "all", "completed", "pending", "late".
+- Query example: `/tasks?limit=10&offset=0&filter=all`.
 
 ## Links
 
