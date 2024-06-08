@@ -55,9 +55,9 @@ KEY_TOKEN=""
 
 ## Pagination Parameters
 
-- `limit`: Number of items per page.
-- `offset`: Offset index.
-- `filter`: Filter options: "all", "completed", "pending", "late".
+- `limit:` Number of items per page.
+- `offset:` Offset index.
+- `filter:` Filter options `"all"`, `"completed"`, `"pending"`, `"late"`.
 - Query example: `/tasks?limit=10&offset=0&filter=all`.
 
 ## Links
