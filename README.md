@@ -1,18 +1,12 @@
 # Task-Manager-API
 
--
-
 ## Entity Relationship Diagram
 
 ![ERD](./erd.png)
 
--
+**Description:**
 
-**Descrição:**
-
-O Gerenciador de Tarefas é uma aplicação web full-stack desenvolvida como projeto de conclusão do curso de Desenvolvimento Web do Reprograma Jucás. Esta aplicação permite aos usuários organizar suas tarefas de forma eficiente, oferecendo recursos avançados de gestão e colaboração.
-
--
+The Task Manager is a full-stack web application developed as a final project for the Reprograma Jucás Web Development course. This application allows users to organize their tasks efficiently, offering advanced management and collaboration features.
 
 ## Technologies
 
@@ -23,8 +17,6 @@ O Gerenciador de Tarefas é uma aplicação web full-stack desenvolvida como pro
 - `Bcrypt`
 - `Sqlite`
 - `Zod`
-
--
 
 ## Installation
 
@@ -39,8 +31,6 @@ $ npm install
 $ npm run dev
 ```
 
--
-
 ## Environment Variables
 
 ```ini
@@ -50,35 +40,33 @@ EXPIRESIN_TOKEN=""
 KEY_TOKEN=""
 ```
 
--
-
 ## Endpoints
 
-### Autenticação
+### Authentication
 
-- `POST ("/login")`: Inicia a sessão do usuário.
-- `POST ("/logout")`: Encerra a sessão do usuário.
+- `POST: ("/login")`: Starts the user session.
+- `POST: ("/logout")`: Closes the user session.
 
-### Usuário
+### User
 
-- `GET ("/user")`: Retorna informações do usuário.
-- `POST ("/user")`: Cria um novo usuário.
+- `GET: ("/user")`: Returns user information.
+- `POST: ("/user")`: Creates a new user.
 
-### Tarefas
+### Tasks
 
-- `POST ("/task")`: Adiciona uma nova tarefa.
-- `GET ("/tasks")`: Retorna todas as tarefas.
-- `PUT ("/task/:id")`: Atualiza uma tarefa existente.
-- `DELETE ("/task/:id")`: Remove uma tarefa existente.
+- `POST: ("/task")`: Adds a new task.
+- `GET: ("/tasks")`: Returns all tasks.
+- `PUT: ("/task/:id")`: Updates an existing task.
+- `DELETE: ("/task/:id")`: Removes an existing task.
 
-## Paginação
+## Pagination
 
-- Parâmetros:
-  - `limit`: Número de itens por página.
-  - `offset`: Índice de deslocamento.
-  - `filter`: Opções de filtro: all | completed | "pending" | "late".
+- Parameters:
+- `limit`: Number of items per page.
+- `offset`: Offset index.
+- `filter`: Filter options: all | completed | "pending" | "afternoon".
 
-**Exemplo de Uso da Paginação**: `/tasks?limit=4&offset=0&filter=late`
+**Example of Pagination Usage**: `/tasks?limit=4&offset=0&filter=late`
 
 ## Links
 
