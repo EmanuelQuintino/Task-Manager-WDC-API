@@ -45,7 +45,7 @@ KEY_TOKEN=""
 | User          | `GET`    | /user     | Return user informations |
 |               | `POST`   | /user     | Create a new user        |
 | Tasks         | `POST`   | /task     | Add a new task           |
-|               | `GET`    | /tasks    | Return pagination tasks  |
+|               | `GET`    | /tasks    | Return *pagination tasks  |
 |               | `PUT`    | /task/:id | Update an existing task  |
 |               | `DELETE` | /task/:id | Remove an existing task  |
 
