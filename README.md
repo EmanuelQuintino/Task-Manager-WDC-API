@@ -1,18 +1,18 @@
 # Task-Manager-API
 
---
+-
 
 ## Entity Relationship Diagram
 
 ![ERD](./erd.png)
 
---
+-
 
 **Descrição:**
 
 O Gerenciador de Tarefas é uma aplicação web full-stack desenvolvida como projeto de conclusão do curso de Desenvolvimento Web do Reprograma Jucás. Esta aplicação permite aos usuários organizar suas tarefas de forma eficiente, oferecendo recursos avançados de gestão e colaboração.
 
---
+-
 
 ## Technologies
 
@@ -24,7 +24,7 @@ O Gerenciador de Tarefas é uma aplicação web full-stack desenvolvida como pro
 - `Sqlite`
 - `Zod`
 
---
+-
 
 ## Installation
 
@@ -39,7 +39,7 @@ $ npm install
 $ npm run dev
 ```
 
---
+-
 
 ## Environment Variables
 
@@ -50,7 +50,7 @@ EXPIRESIN_TOKEN=""
 KEY_TOKEN=""
 ```
 
---
+-
 
 ## Endpoints
 
