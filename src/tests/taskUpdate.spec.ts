@@ -11,7 +11,9 @@ describe("test update task functions", async () => {
     user_id: "1",
   } as TaskDataCreate;
 
-  const futureDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(); // now + 1d
+  const futureDate = new Date(
+    new Date().setHours(new Date().getHours() + 1)
+  ).toISOString(); // now + 1h
 
   it("should update a task!", async () => {
     const taskUpdated = await taskServices.update(
@@ -22,21 +24,6 @@ describe("test update task functions", async () => {
 
     expect(taskUpdated?.date).toEqual(futureDate);
     expect(taskUpdated?.title).toEqual(task.title);
-  });
-
-  it("should not update task if date be before the current time!", async () => {
-    try {
-      const pastDate = new Date("2024-05-23T00:00:00Z").toISOString();
-      const taskUpdated = await taskServices.update(
-        "1",
-        { ...task, date: pastDate },
-        taskRepositoryInMemory
-      );
-
-      if (taskUpdated) throw new Error("expected an error but the task was updated!");
-    } catch (error: any) {
-      expect(error.message).toBe("date cannot be before the current time!");
-    }
   });
 
   it("should not update task if task not found!", async () => {

@@ -10,7 +10,9 @@ describe("test create task functions", async () => {
     user_id: "1",
   } as TaskDataCreate;
 
-  const futureDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(); // now + 1d
+  const futureDate = new Date(
+    new Date().setHours(new Date().getHours() + 1)
+  ).toISOString(); // now + 1h
 
   it("should create a task!", async () => {
     const taskCreated = await taskServices.create(
