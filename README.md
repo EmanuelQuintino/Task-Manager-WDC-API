@@ -1,4 +1,4 @@
-# Task-Manager-API
+# Task Manager - RESTfull API
 
 ## Entity Relationship Diagram
 
@@ -49,7 +49,7 @@ KEY_TOKEN=""
 |               | `PUT`    | /task/:id | Update an existing task       |
 |               | `DELETE` | /task/:id | Remove an existing task       |
 
-**\*Pagination Parameters**
+**\*Pagination parameters**
 
 - `limit:` Number of items per page.
 - `offset:` Offset index.
