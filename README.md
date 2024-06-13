@@ -60,10 +60,8 @@ KEY_TOKEN=""
 
 ## Login User Test
 
-```ini
-email: user@test.com
-password: A!1234567
-```
+- email: user@test.com
+- password: A!1234567
 
 ## Links
 
