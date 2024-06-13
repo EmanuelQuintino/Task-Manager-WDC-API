@@ -1,7 +1,7 @@
 {
   "name": "task-manager-wdc-api",
   "version": "1.0.0",
-  "description": "project task manager",
+  "description": "Task Manager is a Full-Stack application developed in React and Node.js to complete the Web Development Course offered by Reprograma Jucás. It was created with tools for users to manage, monitor and generate reports on their tasks in an organized and intuitive way, in addition to having a responsive version for use on cell phones.",
   "main": "src/server.ts",
   "scripts": {
     "dev": "tsx watch src/server.ts",
