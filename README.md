@@ -51,12 +51,17 @@ KEY_TOKEN=""
 |               | `PUT`    | /task/:id | Update an existing task       |
 |               | `DELETE` | /task/:id | Remove an existing task       |
 
-**\*Pagination parameters**
+**\*Pagination parameters:**
 
 - `limit:` Number of items per page.
 - `offset:` Offset index.
 - `filter:` Filter options `"all"`, `"completed"`, `"pending"`, `"late"`.
-- Query example: `"/tasks?limit=10&offset=0&filter=all"`.
+
+**Query example:**
+
+```
+/tasks?limit=10&offset=0&filter=all;
+```
 
 ## Login User Test
 
