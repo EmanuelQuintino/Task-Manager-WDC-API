@@ -65,13 +65,13 @@ KEY_TOKEN=""
 
 ## User Test Login
 
-- **email:**
+**email:**
 
 ```
 user@test.com
 ```
 
-- **password:**
+**password:**
 
 ```
 A!1234567
