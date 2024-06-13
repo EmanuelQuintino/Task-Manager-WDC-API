@@ -65,19 +65,10 @@ KEY_TOKEN=""
 
 ## User Test Login
 
-**email:**
-
-```
-user@test.com
-```
-
-**password:**
-
-```
-A!1234567
-```
+- **email:** user@test.com
+- **password:** A!1234567
 
 ## Links
 
-- [Deploy](https://task-manager-seven-indol.vercel.app/)
+- [Deploy](https://task-manager-wdc.vercel.app/)
 - [Front Repository](https://github.com/EmanuelQuintino/Task-Manager)
