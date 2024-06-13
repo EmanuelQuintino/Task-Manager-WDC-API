@@ -1,5 +1,5 @@
 {
-  "name": "task-menager-api",
+  "name": "task-manager-wdc-api",
   "version": "1.0.0",
   "description": "project task manager",
   "main": "src/server.ts",

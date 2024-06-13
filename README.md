@@ -1,4 +1,4 @@
-# Task Manager - RESTfull API
+# Task Manager WDC - RESTfull API
 
 ## Entity Relationship Diagram
 
@@ -12,6 +12,8 @@
 - `JSON Web Token (JWT)`
 - `Bcrypt`
 - `Sqlite`
+- `Vitest`
+- `Cors`
 - `Zod`
 
 ## Installation
