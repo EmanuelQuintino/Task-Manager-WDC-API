@@ -60,7 +60,7 @@ KEY_TOKEN=""
 **Query example:**
 
 ```
-/tasks?limit=10&offset=0&filter=all;
+/tasks?limit=10&offset=0&filter=all
 ```
 
 ## User Test Login
