@@ -58,6 +58,13 @@ KEY_TOKEN=""
 - `filter:` Filter options `"all"`, `"completed"`, `"pending"`, `"late"`.
 - Query example: `"/tasks?limit=10&offset=0&filter=all"`.
 
+## Login User Test
+
+```ini
+email: user@test.com
+password: A!1234567
+```
+
 ## Links
 
 - [Deploy](https://task-manager-seven-indol.vercel.app/)
