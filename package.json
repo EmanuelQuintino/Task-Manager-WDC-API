@@ -13,8 +13,17 @@
   "keywords": [
     "node.js",
     "typescript",
-    "sql",
-    "task-manager"
+    "express",
+    "jsonwebtoken",
+    "cookies",
+    "bcrypt",
+    "vitest",
+    "sqlite",
+    "cors",
+    "zod",
+    "task-manager",
+    "web development course",
+    "reprograma jucas"
   ],
   "author": "Emanuel Quintino",
   "license": "ISC",
