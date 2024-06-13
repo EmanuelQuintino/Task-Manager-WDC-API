@@ -60,8 +60,8 @@ KEY_TOKEN=""
 
 ## Login User Test
 
-- **EMAIL**: `user@test.com`
-- **PASSWORD**: `A!1234567`
+- **email**: `user@test.com`
+- **password**: `A!1234567`
 
 ## Links
 
