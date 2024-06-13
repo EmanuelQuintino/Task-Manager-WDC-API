@@ -65,8 +65,17 @@ KEY_TOKEN=""
 
 ## User Test Login
 
-- **email**: `user@test.com`
-- **password**: `A!1234567`
+- **email:**
+
+```
+user@test.com
+```
+
+- **password:**
+
+```
+A!1234567
+```
 
 ## Links
 
