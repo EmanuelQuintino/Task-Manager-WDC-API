@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
+import { AppError } from "./appError";
 
 export function appErrors(
-  error: Error & { status: number },
+  error: AppError,
   _req: Request,
   res: Response,
   _next: NextFunction
@@ -16,6 +17,6 @@ export function appErrors(
   }
 
   return res
-    .status(error.status || 500)
-    .json({ message: error.message || "Server Error!" });
+    .status(error.status || 400)
+    .json({ message: error.message || "Something went wrong!" });
 }
