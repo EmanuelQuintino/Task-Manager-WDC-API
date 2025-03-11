@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { appError } from "../errors/appError";
+import { AppError } from "../errors/appError";
 import { TaskDataTypes } from "../validations/taskSchema";
 import { PaginationDataTypes } from "../validations/paginationSchema";
 import { CreateTaskDataTypes, UpdateTaskDataTypes } from "../repositories/taskRepository";
@@ -21,7 +21,7 @@ export const taskServices = {
       const { title, description, date, status, user_id } = data;
 
       if (new Date(date) < new Date()) {
-        throw appError("date cannot be before the current time!", 400);
+        throw new AppError("date cannot be before the current time!", 400);
       }
 
       const task = {
@@ -46,7 +46,7 @@ export const taskServices = {
       const { userID, limit, offset, filter } = data;
 
       if (!limit || !offset || !filter) {
-        throw appError("please inform query params limit, offset and filter!", 400);
+        throw new AppError("please inform query params limit, offset and filter!", 400);
       }
 
       const userTasks = await repository.getTasks({ userID, limit, offset, filter });
@@ -62,10 +62,10 @@ export const taskServices = {
       const { title, description, date, status, user_id } = data;
 
       const task = await repository.getTask(id);
-      if (!task) throw appError("task not found!", 404);
+      if (!task) throw new AppError("task not found!", 404);
 
       if (task.user_id != user_id) {
-        throw appError("user not authorized to update task!", 401);
+        throw new AppError("user not authorized to update task!", 401);
       }
 
       const taskToUpdate = {
@@ -89,15 +89,15 @@ export const taskServices = {
   async delete(id: string, user_id: string, repository: Repository) {
     try {
       const task = await repository.getTask(id);
-      if (!task) throw appError("task not found!", 404);
+      if (!task) throw new AppError("task not found!", 404);
 
       if (task.user_id != user_id) {
-        throw appError("user not authorized to delete task!", 401);
+        throw new AppError("user not authorized to delete task!", 401);
       }
 
       const taskDeleted = await repository.deleteTaskByID(id);
 
-      if (!taskDeleted) throw appError("task not deleted!", 500);
+      if (!taskDeleted) throw new AppError("task not deleted!", 500);
 
       return taskDeleted;
     } catch (error) {

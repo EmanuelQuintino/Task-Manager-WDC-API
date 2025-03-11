@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { hash } from "bcrypt";
 import { CreateUserDataType } from "../repositories/userRepository";
-import { appError } from "../errors/appError";
+import { AppError } from "../errors/appError";
 import { UserDataTypes } from "../validations/userSchema";
 
 export type UserRepositoryTypes = {
@@ -17,7 +17,7 @@ export const userServices = {
 
       const user = await repository.getUserByEmail(email);
 
-      if (user) throw appError("email already exists!", 400);
+      if (user) throw new AppError("email already exists!", 400);
 
       const passwordHash = await hash(password, 10);
 
@@ -43,7 +43,7 @@ export const userServices = {
     try {
       const userData = await repository.getUserByID(id);
 
-      if (!userData) throw appError("user not found!", 404);
+      if (!userData) throw new AppError("user not found!", 404);
 
       delete userData.password;
 

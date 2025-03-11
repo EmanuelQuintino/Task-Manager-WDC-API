@@ -1,5 +1,5 @@
 import { sqliteConnection } from "../databases/sqlite3";
-import { appError } from "../errors/appError";
+import { AppError } from "../errors/appError";
 import { TaskDataCreate, UserTasksPagination } from "../services/taskServices";
 
 export type CreateTaskDataTypes = TaskDataCreate & { id: string };
@@ -29,8 +29,8 @@ export const taskRepository = {
     try {
       const db = await sqliteConnection();
 
-      const quarySQL = "SELECT * FROM tasks WHERE id = ?;";
-      const task = await db.get(quarySQL, [id]);
+      const querySQL = "SELECT * FROM tasks WHERE id = ?;";
+      const task = await db.get(querySQL, [id]);
 
       return task;
     } catch (error) {
@@ -88,7 +88,7 @@ export const taskRepository = {
           break;
 
         default:
-          throw appError("invalid filter!", 400);
+          throw new AppError("invalid filter!", 400);
       }
 
       return tasks;
