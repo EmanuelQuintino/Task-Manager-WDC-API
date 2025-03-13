@@ -4,10 +4,8 @@ import { UserDataTypes } from "../validations/userSchema";
 export type CreateUserDataType = UserDataTypes & { id: string };
 
 export const userRepository = {
-  async createUser(data: CreateUserDataType) {
+  async createUser({ id, name, email, password }: CreateUserDataType) {
     try {
-      const { id, name, email, password } = data;
-
       const db = await sqliteConnection();
 
       const querySQL =

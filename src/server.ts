@@ -38,6 +38,6 @@ app.listen(PORT, () => {
 
 sqliteConnection()
   .then(() => console.log("Database is connected..."))
-  .catch((error) => console.error("Database is not connected - ", error));
+  .catch((error) => console.error("Database ERROR - ", error));
 
-runMigrations();
+runMigrations(); // colocar feedback
