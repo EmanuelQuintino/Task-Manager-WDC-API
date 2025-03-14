@@ -6,7 +6,7 @@ import { UserDataTypes } from "../validations/userSchema";
 
 export type UserRepositoryTypes = {
   createUser(data: CreateUserDataType): Promise<CreateUserDataType | undefined>;
-  getUserByID(id: string): Promise<{ password?: string } | undefined>;
+  getUserByID(id: string): Promise<Partial<CreateUserDataType> | undefined>;
   getUserByEmail(email: string): Promise<CreateUserDataType | undefined>;
 };
 

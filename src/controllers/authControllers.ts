@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { userRepository } from "../repositories/userRepository";
-import { loginSchema } from "../validations/loginSchema";
+import { authSchema } from "../validations/authSchema";
 import { authServices } from "../services/authServices";
 
 export const authControllers = {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password } = loginSchema.parse(req.body);
+      const { email, password } = authSchema.parse(req.body);
 
       const { token, id } = await authServices.login({ email, password }, userRepository);
 
