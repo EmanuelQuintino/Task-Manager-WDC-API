@@ -14,7 +14,7 @@ export const authControllers = {
         httpOnly: true,
         sameSite: "none",
         secure: true,
-        maxAge: 1000 * 60 * 60 * 18, // 18h
+        maxAge: 1000 * 60 * 60 * 24, // 24h
       });
 
       return res.status(200).json({ message: "login completed successfully!", id });

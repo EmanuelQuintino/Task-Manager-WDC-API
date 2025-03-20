@@ -11,8 +11,9 @@ describe("test create user functions", async () => {
 
   it("should create a user!", async () => {
     const userCreated = await userServices.create(user, userRepositoryInMemory);
-    expect(userCreated?.email).toEqual(user.email);
+    expect(userCreated).toBeDefined();
     expect(userCreated).toHaveProperty("id");
+    expect(userCreated?.email).toEqual(user.email);
   });
 
   it("should not create user if email already exists!", async () => {

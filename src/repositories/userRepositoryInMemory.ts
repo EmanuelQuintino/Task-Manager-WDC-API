@@ -17,10 +17,8 @@ const users = [
 ];
 
 export const userRepositoryInMemory = {
-  async createUser(data: CreateUserDataType) {
+  async createUser({ id, name, email, password }: CreateUserDataType) {
     try {
-      const { id, name, email, password } = data;
-
       const user = {
         id,
         name,
