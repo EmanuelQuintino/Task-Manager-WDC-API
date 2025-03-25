@@ -12,11 +12,11 @@ export const taskSchema = z
 
     description: z
       .string({
-        required_error: "desciption is required!",
-        invalid_type_error: "desciption must be a string!",
+        required_error: "description is required!",
+        invalid_type_error: "description must be a string!",
       })
-      .min(3, "desciption must have at least 3 characters!")
-      .max(255, "max desciption length exceeded!"),
+      .min(3, "description must have at least 3 characters!")
+      .max(255, "max description length exceeded!"),
 
     date: z
       .string({

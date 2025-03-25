@@ -9,7 +9,7 @@ export type UserTasksPagination = PaginationDataTypes & { userID: string };
 
 type Repository = {
   createTask(data: TaskDataCreate): Promise<CreateTaskDataTypes | undefined>;
-  getTask(id: string): Promise<CreateTaskDataTypes | undefined>;
+  getTaskByID(id: string): Promise<CreateTaskDataTypes | undefined>;
   getTasks(data: UserTasksPagination): Promise<CreateTaskDataTypes[] | undefined>;
   updateTask(data: UpdateTaskDataTypes): Promise<UpdateTaskDataTypes | undefined>;
   deleteTaskByID(id: string): Promise<{ id: string } | undefined>;
@@ -61,7 +61,7 @@ export const taskServices = {
     try {
       const { title, description, date, status, user_id } = data;
 
-      const task = await repository.getTask(id);
+      const task = await repository.getTaskByID(id);
       if (!task) throw new AppError("task not found!", 404);
 
       if (task.user_id != user_id) {
@@ -88,7 +88,7 @@ export const taskServices = {
 
   async delete(id: string, user_id: string, repository: Repository) {
     try {
-      const task = await repository.getTask(id);
+      const task = await repository.getTaskByID(id);
       if (!task) throw new AppError("task not found!", 404);
 
       if (task.user_id != user_id) {

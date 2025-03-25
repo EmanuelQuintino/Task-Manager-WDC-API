@@ -56,7 +56,7 @@ export const taskRepositoryInMemory = {
     }
   },
 
-  async getTask(id: string) {
+  async getTaskByID(id: string) {
     try {
       const task = tasks.find((task) => task.id == id);
       return task as CreateTaskDataTypes;

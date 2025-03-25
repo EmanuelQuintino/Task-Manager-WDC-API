@@ -6,10 +6,15 @@ export type CreateTaskDataTypes = TaskDataCreate & { id: string };
 export type UpdateTaskDataTypes = CreateTaskDataTypes & { updated_at: Date };
 
 export const taskRepository = {
-  async createTask(data: CreateTaskDataTypes) {
+  async createTask({
+    id,
+    title,
+    description,
+    date,
+    status,
+    user_id,
+  }: CreateTaskDataTypes) {
     try {
-      const { id, title, description, date, status, user_id } = data;
-
       const db = await sqliteConnection();
 
       const querySQL = `
@@ -25,7 +30,7 @@ export const taskRepository = {
     }
   },
 
-  async getTask(id: string) {
+  async getTaskByID(id: string) {
     try {
       const db = await sqliteConnection();
 
@@ -97,19 +102,25 @@ export const taskRepository = {
     }
   },
 
-  async updateTask(data: UpdateTaskDataTypes) {
+  async updateTask({
+    id,
+    title,
+    description,
+    date,
+    status,
+    user_id,
+    updated_at,
+  }: UpdateTaskDataTypes) {
     try {
-      const { id, title, description, date, status, user_id, updated_at } = data;
-
       const db = await sqliteConnection();
 
       const querySQL = `
         UPDATE tasks 
         SET title = ?, description = ?, date = ?, status = ?, updated_at = ?
-        WHERE id = ?;
+        WHERE id = ? AND user_id = ?;
       `;
 
-      await db.run(querySQL, [title, description, date, status, updated_at, id]);
+      await db.run(querySQL, [title, description, date, status, updated_at, id, user_id]);
 
       return { id, title, description, date, status, user_id, updated_at };
     } catch (error) {
