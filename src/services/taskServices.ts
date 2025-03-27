@@ -5,21 +5,22 @@ import { PaginationDataTypes } from "../validations/paginationSchema";
 import { CreateTaskDataTypes, UpdateTaskDataTypes } from "../repositories/taskRepository";
 
 export type TaskDataCreate = TaskDataTypes & { user_id: string };
-export type UserTasksPagination = PaginationDataTypes & { userID: string };
+export type PaginationTasks = PaginationDataTypes & { userID: string };
 
-type Repository = {
+export type TaskRepositoryTypes = {
   createTask(data: TaskDataCreate): Promise<CreateTaskDataTypes | undefined>;
   getTaskByID(id: string): Promise<CreateTaskDataTypes | undefined>;
-  getTasks(data: UserTasksPagination): Promise<CreateTaskDataTypes[] | undefined>;
+  getTasks(data: PaginationTasks): Promise<CreateTaskDataTypes[] | undefined>;
   updateTask(data: UpdateTaskDataTypes): Promise<UpdateTaskDataTypes | undefined>;
   deleteTaskByID(id: string): Promise<{ id: string } | undefined>;
 };
 
 export const taskServices = {
-  async create(data: TaskDataCreate, repository: Repository) {
+  async create(
+    { title, description, date, status, user_id }: TaskDataCreate,
+    repository: TaskRepositoryTypes
+  ) {
     try {
-      const { title, description, date, status, user_id } = data;
-
       if (new Date(date) < new Date()) {
         throw new AppError("date cannot be before the current time!", 400);
       }
@@ -41,10 +42,11 @@ export const taskServices = {
     }
   },
 
-  async read(data: UserTasksPagination, repository: Repository) {
+  async read(
+    { userID, limit, offset, filter }: PaginationTasks,
+    repository: TaskRepositoryTypes
+  ) {
     try {
-      const { userID, limit, offset, filter } = data;
-
       if (!limit || !offset || !filter) {
         throw new AppError("please inform query params limit, offset and filter!", 400);
       }
@@ -57,10 +59,12 @@ export const taskServices = {
     }
   },
 
-  async update(id: string, data: TaskDataCreate, repository: Repository) {
+  async update(
+    id: string,
+    { title, description, date, status, user_id }: TaskDataCreate,
+    repository: TaskRepositoryTypes
+  ) {
     try {
-      const { title, description, date, status, user_id } = data;
-
       const task = await repository.getTaskByID(id);
       if (!task) throw new AppError("task not found!", 404);
 
@@ -86,7 +90,7 @@ export const taskServices = {
     }
   },
 
-  async delete(id: string, user_id: string, repository: Repository) {
+  async delete(id: string, user_id: string, repository: TaskRepositoryTypes) {
     try {
       const task = await repository.getTaskByID(id);
       if (!task) throw new AppError("task not found!", 404);
