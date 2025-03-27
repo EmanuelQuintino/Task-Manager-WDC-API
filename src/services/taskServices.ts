@@ -82,9 +82,9 @@ export const taskServices = {
         updated_at: new Date(),
       };
 
-      const taskUpdate = await repository.updateTask(taskToUpdate);
+      const taskUpdated = await repository.updateTask(taskToUpdate);
 
-      return taskUpdate;
+      return taskUpdated;
     } catch (error) {
       throw error;
     }

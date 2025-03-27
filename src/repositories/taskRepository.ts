@@ -1,6 +1,6 @@
 import { sqliteConnection } from "../databases/sqlite3";
 import { AppError } from "../errors/appError";
-import { TaskDataCreate, UserTasksPagination } from "../services/taskServices";
+import { TaskDataCreate, PaginationTasks } from "../services/taskServices";
 
 export type CreateTaskDataTypes = TaskDataCreate & { id: string };
 export type UpdateTaskDataTypes = CreateTaskDataTypes & { updated_at: Date };
@@ -43,10 +43,8 @@ export const taskRepository = {
     }
   },
 
-  async getTasks(data: UserTasksPagination) {
+  async getTasks({ userID, limit, offset, filter }: PaginationTasks) {
     try {
-      const { userID, limit, offset, filter } = data;
-
       const db = await sqliteConnection();
       let querySQL = "";
       let tasks = [];
