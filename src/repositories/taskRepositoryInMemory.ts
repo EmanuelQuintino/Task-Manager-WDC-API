@@ -1,4 +1,4 @@
-import { UserTasksPagination } from "../services/taskServices";
+import { PaginationTasks } from "../services/taskServices";
 import { CreateTaskDataTypes, UpdateTaskDataTypes } from "./taskRepository";
 
 const tasks = [
@@ -65,7 +65,7 @@ export const taskRepositoryInMemory = {
     }
   },
 
-  async getTasks(data: UserTasksPagination) {
+  async getTasks(data: PaginationTasks) {
     try {
       const { userID, limit, offset, filter } = data;
 
